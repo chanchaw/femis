@@ -1,0 +1,385 @@
+<nz-layout class="layout">
+  <nz-header>
+    <div nz-row>
+      <div nz-col nzSpan="14">
+        <div class="logo"></div>
+        <span class="appTitle">FEMIS</span>
+        <span class="appSupplier"> - 新东方智能化系统工程有限公司</span>
+      </div>
+
+
+      <div nz-col nzSpan="8">
+        <div nz-row>
+          <div nz-col nzSpan="10">
+              <!-- <input nz-input [(ngModel)]="curUrl" id="curUrl" name="curUrl" placeholder=""> -->
+              <!-- 2019年6月4日 23:03:57 测试注释 -->
+              <input nz-input id="curUrl" name="curUrl" placeholder="">
+          </div>
+
+          <div nz-col nzSpan="14">
+              <!-- <button (click)="testDynamic($event)" nz-button>测试</button> -->
+          </div>
+        </div>
+        
+      </div>
+      
+      <div nz-col nzSpan="2" nzJustify="end">
+        <div class="headerRight">
+            <!-- <i nz-icon type="close" theme="outline"></i> -->
+            <i nz-icon type="poweroff" theme="outline"></i>
+            <a (click)="logout()"> 退出</a>
+        </div>
+      </div>
+    </div>
+  </nz-header>
+
+  <nz-layout>
+    <!-- 侧边栏  style="background:#fff;height: 100%;background-color: blue" -->
+    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzWidth]="140">
+      <!-- 
+      <div nz-row class="collapseButton">
+        <div nz-col nzSpan="12" nzOffset="3">
+          <button nz-button [nzType]="'primary'" (click)="toggleCollapsed()" style="margin-bottom: 10px;">
+            <i nz-icon type="menu-fold" theme="outline"></i>
+          </button>
+        </div>
+      </div>
+      -->
+
+      <!-- 
+        下面是为实现侧边栏菜单折叠时移除的代码：
+        style="height:100%"
+
+        使用本地图片
+        <img class="navigatorIcon" src="assets/img/icon/billAudited.png" alt="合同">
+
+        ng-zorro 7之前版本的引用图标的方式
+        <i class="anticon anticon-user"></i>
+        -->
+
+      <ul nz-menu [nzMode]="'inline'"  [nzInlineCollapsed]="isCollapsed" [nzTheme]="light"
+        style="height:100%">
+
+        <li nz-menu-item
+          nz-popover nzTitle="合同与计划" [nzContent]="tplOrder" nzPlacement="rightTop">
+          <span title>
+              <i nz-icon type="book" theme="outline"></i>
+            <span>合同与计划</span>
+          </span>
+        </li>
+
+        <li nz-menu-item
+          nz-popover nzTitle="原料仓库" [nzContent]="tplRaw" nzPlacement="rightTop">
+          <span title>
+              <!-- <i nz-icon type="calendar" theme="outline"></i> -->
+              <i nz-icon type="box-plot" theme="outline"></i>
+            <span>原料仓库</span>
+          </span>
+        </li>
+
+        <li nz-menu-item
+          nz-popover nzTitle="白坯仓库" [nzContent]="tplWhiteCloth" nzPlacement="rightTop">
+          <span title>
+              <!-- <i nz-icon type="credit-card" theme="outline"></i> -->
+              <i nz-icon type="flag" theme="outline"></i>
+            <span>白坯仓库</span>
+          </span>
+        </li>
+
+        <li nz-menu-item
+          nz-popover nzTitle="色布仓库" [nzContent]="tplColorCloth" nzPlacement="rightTop">
+          <span title>
+              <!-- <i nz-icon type="file-text" theme="outline"></i> -->
+              <i nz-icon type="bg-colors" theme="outline"></i>
+            <span>色布仓库</span>
+          </span>
+        </li>
+
+        <li nz-menu-item
+        nz-popover nzTitle="成品仓库" [nzContent]="tplFinishedProduct" nzPlacement="rightTop">
+        <span title>
+            <!-- <i nz-icon type="file-markdown" theme="outline"></i> -->
+            <i nz-icon type="skin" theme="outline"></i>
+          <span>成品仓库</span>
+        </span>
+        </li>
+
+
+        <li nz-menu-item>
+          <span title>
+              <!-- <i nz-icon type="hdd" theme="outline"></i> -->
+              <i nz-icon type="money-collect" theme="outline"></i>
+            <span>财务系统</span>
+          </span>
+        </li>
+
+
+        <li nz-menu-item
+          nz-popover nzTitle="基础资料" [nzContent]="tplBaseData" nzPlacement="rightTop">
+          <span title>
+              <i nz-icon type="appstore" theme="outline"></i>
+            <span>基础资料</span>
+          </span>
+        </li>
+
+
+        <li nz-menu-item
+            nz-popover nzTitle="系统设置" [nzContent]="tplSysConfig" nzPlacement="rightTop">
+          <span title>
+              <i nz-icon type="setting" theme="outline"></i>
+            <span>系统设置</span>
+          </span>
+        </li>        
+      </ul>
+    </nz-sider>
+
+    <!-- 内容 -->
+    <nz-content style="background:#fff; padding: 24px; min-height: 510px;">
+      <app-tab #tabComponent>
+        <router-outlet></router-outlet>
+      </app-tab>
+    </nz-content>
+  </nz-layout>
+  
+  
+
+ 
+
+
+  
+  <!-- 下面是所有弹出的二级菜单 -->
+  <!-- 订单与计划 -->
+  <ng-template #tplOrder>
+    <div>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+        <ul class="billElement">
+          <li><a (click)="tabs('order')">面料订单</a></li>
+          <li>成品订单</li>
+          <li>流转卡打印</li>
+          <li>原料申请</li>
+          <li>白坯构成</li>
+        </ul>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <nz-divider nzDashed></nz-divider>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+        <ul class="reportElement">
+          <li>合同综合查询</li>
+          <li>待审核合同</li>
+          <li>进度表</li>
+          <li>成本表</li>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- 基础资料 -->
+  <ng-template #tplBaseData>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+      <ul class="billElement">
+        <li><a (click)="tabs('unit')">计量单位</a></li>
+        <li><a (click)="tabs('class')">班次</a></li>
+        <li><a (click)="tabs('finishedProduct')">成品资料</a></li>
+        <li><a (click)="tabs('contactcompany')">往来单位</a></li>
+        <li><a (click)="tabs('singlecontainer')">单选集合</a></li>
+        <li><a (click)="tabs('employee')">员工设置</a></li>
+      </ul>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- 原料 -->
+  <ng-template #tplRaw>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+      <ul class="billElement">
+        <li>序时表</li>
+        <li>库存表</li>
+        <li>供应商对账单</li>
+        <li>加工户收发存汇总表</li>
+      </ul>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <!-- 白坯 -->
+  <ng-template #tplWhiteCloth>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+        <ul class="billElement">
+          <li>序时表</li>
+          <li>库存表</li>
+          <li>染厂收发存汇总表</li>
+          <li>加工户对账单</li>
+          <li>染厂对账单</li>
+        </ul>
+        </div>
+      </div>
+  </ng-template>
+
+
+  <!-- 色布 -->
+  <ng-template #tplColorCloth>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+        <ul class="billElement">
+          <li>序时表</li>
+          <li>库存表</li>
+          <li>深加工收发存汇总表</li>
+          <li>深加工对账单</li>
+        </ul>
+        </div>
+      </div>
+  </ng-template>
+
+
+  <!-- 成品 -->
+  <ng-template #tplFinishedProduct>
+      <div nz-row>
+        <div nz-col nzSpan="24">
+        <ul class="billElement">
+          <li>序时表</li>
+          <li>库存表</li>
+          <li>加工户收发存汇总表</li>
+          <li>加工户对账单</li>
+        </ul>
+        </div>
+      </div>
+  </ng-template>
+
+  <!-- 系统设置 -->
+  <ng-template #tplSysConfig>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+      <ul class="billElement">
+        <li><a (click)="tabs('page01')">页面01</a></li>
+        <li><a (click)="tabs('page02')">页面02</a></li>
+        <li><a (click)="tabs('page03')">页面03</a></li>
+        <li><a (click)="tabs('ContactCategory')">往来单位类型</a></li>
+        <li><a (click)="tabs('ContactCompany')">往来单位</a></li>
+        <li><a (click)="tabs('department')">部门</a></li>
+      </ul>
+      </div>
+    </div>
+</ng-template>
+
+  
+
+
+   <!-- 登录模态窗，控制模态窗是否显示的变量是：[(nzVisible)]=loginModalIsVisible -->
+   <div>
+    <nz-modal (nzVisible)="false" 
+      nzMaskClosable="false" nzClosable="false" nzWidth="400px"
+      [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+      >
+  
+      <ng-template #modalTitle>
+          <span class="loginTitle">易织染 - 家纺MIS系统</span>
+      </ng-template>
+  
+      <ng-template #modalContent>
+      <div nz-row>
+        <div nz-col nzSpan='18' nzOffset='3'>
+          <nz-form-item>
+            <nz-form-control nzValidateStatus={{vrUserid?.statusDesc}} nzHasFeedback>
+
+              <!-- <nz-input-group nzAddOnBefore="工号">
+                <input type="text" nz-input [(ngModel)]="userUI.userid" name="userUI.userid" #ctlUserId
+                  (keyup)="onClickUserid($event)" placeholder="输入工号">
+              </nz-input-group> -->
+
+              <!-- 2019年6月4日 23:04:40 测试注释 -->
+              <nz-input-group nzAddOnBefore="工号">
+                  <input type="text" nz-input name="userUI.userid" #ctlUserId
+                    (keyup)="onClickUserid($event)" placeholder="输入工号">
+                </nz-input-group>
+
+
+              <nz-form-explain>{{vrUserid?.explain}}</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    
+      <!-- <div nz-row>
+        <div nz-col nzSpan='18' nzOffset='3'>
+              <nz-input-group nzAddOnBefore="名称">
+                <input type="text" nz-input [(ngModel)]="userUI.username" 
+                  name="userUI.username" disabled="disabled" placeholder="名称，不可编辑">
+              </nz-input-group>
+        </div>
+      </div> -->
+
+      <div nz-row>
+        <div nz-col nzSpan='18' nzOffset='3'>
+          <nz-form-item>
+            <nz-form-control>
+
+              <!-- <nz-input-group nzAddOnBefore="名称">
+                <input type="text" nz-input [(ngModel)]="userUI.username" name="userUI.username"
+                disabled="disabled" placeholder="名称">
+              </nz-input-group> -->
+              <!-- 2019年6月4日 23:05:07 测试注释 -->
+              <nz-input-group nzAddOnBefore="名称">
+                  <input type="text" nz-input  name="userUI.username"
+                  disabled="disabled" placeholder="名称">
+                </nz-input-group>
+
+
+              <nz-form-explain></nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+
+    
+      <div nz-row>
+        <div nz-col nzSpan='18' nzOffset='3'>
+          <nz-form-item>
+            <nz-form-control nzValidateStatus={{vrPassword.statusDesc}} nzHasFeedback>
+
+              <!-- <nz-input-group nzAddOnBefore="密码">
+                <input type="password" nz-input [(ngModel)]="userUI.password" name="userUI.password"
+                  #ctlPassword (keyup)="onClickPassword($event)" placeholder="输入密码">
+              </nz-input-group> -->
+              <!-- 2019年6月4日 23:05:30 测试注释 -->
+              <nz-input-group nzAddOnBefore="密码">
+                  <input type="password" nz-input  name="userUI.password"
+                    #ctlPassword (keyup)="onClickPassword($event)" placeholder="输入密码">
+                </nz-input-group>
+
+              <nz-form-explain>{{vrPassword.explain}}</nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+  </ng-template>
+  
+      <ng-template #modalFooter>
+        <div nz-row nzAlign="middle">
+          <div nz-col nzSpan="5" nzOffset="3">
+            <label nz-checkbox>记住我</label>
+          </div>
+          <div nz-col nzSpan="13">
+            <!-- <button nz-button nzType="default" (click)="test()">测试</button> -->
+            <button nz-button nzType="primary" (click)="doLogin()">登录</button>
+          </div>
+        </div>
+      </ng-template>
+    </nz-modal>
+  </div>
+
+
+</nz-layout>

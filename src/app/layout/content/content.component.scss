@@ -1,0 +1,65 @@
+.logo {
+    /* width: 120px; */
+    width: 31px;
+    height: 31px;
+    background: url('../../../favicon.ico') no-repeat;
+    margin: 16px 28px 16px 0;
+    float: left;
+}
+
+
+
+.appTitle{
+    color: white;
+    font-size: 1.7em;
+}
+
+.appSupplier{
+    color:white;
+    font-size: 1.1em;
+}
+
+.loginFrame{
+    width: 100px;
+}
+
+.headerRight{
+    color:white;
+    font-size: 1.1em;
+}
+
+
+.loginTitle{/* 登录框软件标题 */
+    font-size: 1.3em;
+}
+
+
+/* 下面是popover.component.html模板的样式 */
+.billElement{
+    list-style-type: none;
+}
+
+.billElement li{
+    float: left;
+    margin-right: 20px
+}
+
+.reportElement{
+    list-style-type: none;
+}
+
+.reportElement li{
+    float: left;
+    margin-right: 20px;
+}
+
+/* 导航栏图标大小 */
+.navigatorIcon{
+    width: 20px;
+    height: 20px;
+}
+
+
+.collapseButton{
+    margin-top: 10px;
+}
