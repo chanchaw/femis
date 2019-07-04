@@ -34,3 +34,25 @@ export class JsonData{
     public data:any[];
 }
 
+
+// DevExtreme DataGrid 组件
+@Injectable()
+export class DevExtremeDataGridColumn{
+  dataField:string;
+  caption:string;
+  width:number;
+  fixed:boolean;
+  dataType:string;
+  alignment:string;
+  visible:boolean;
+}
+
+
+// 字段映射
+@Injectable()
+export class MetaFieldMap{
+  oFieldName:string;
+  tFieldName:string;
+}
+
+

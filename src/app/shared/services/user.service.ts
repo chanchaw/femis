@@ -21,7 +21,7 @@ export class User{
   operateip:string;
 }
 
-export class Url{
+class Url{
   static insert:string=contextPath + pre + '/insert';
   static updateByPrimaryKey:string=contextPath + pre+ '/updateByPrimaryKey'// 表单参数
   static getByUserid:string=contextPath + pre+ '/getByUserid';// string类型路径参数 - 用户ID

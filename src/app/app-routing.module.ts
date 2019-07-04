@@ -41,8 +41,21 @@ const routes: Routes = [
     data:{ title:'首页',isRemove: true }
   },
 
+  { 
+    path:'contactCategory',
+    loadChildren:'./pages/contact-category/contact-category.module#ContactCategoryModule',
+    data:{ title:'往来单位类型',isRemove: true }
+  },
 
-  // 默认显示的路径
+  { 
+    path:'contactCompany',
+    loadChildren:'./pages/contact-company/contact-company.module#ContactCompanyModule',
+    data:{ title:'往来单位',isRemove: true }
+  },
+
+
+
+  // 默认显示的路径   contactCompany
   // {
   //   path: '**',
   //   redirectTo: 'home',
@@ -53,7 +66,7 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'home01',
     // canActivate: [ AuthGuardService ],
-    data:{ title:'首页',isRemove:true }
+    data:{ title:'首页',isRemove:false }
   }
 
 ];

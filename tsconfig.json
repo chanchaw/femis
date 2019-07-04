@@ -19,6 +19,21 @@
       "dom"
     ],
     "paths": {
+      // DevExtreme 国际化
+      "globalize": [
+        "node_modules/globalize/dist/globalize"
+      ],
+      "globalize/*": [
+        "node_modules/globalize/dist/globalize/*"
+      ],
+      "cldr": [
+        "node_modules/cldrjs/dist/cldr"
+      ],
+      "cldr/*": [
+        "node_modules/cldrjs/dist/cldr/*"
+      ],
+      // DevExtreme 国际化 结束
+
       "jszip": [
         "node_modules/jszip/dist/jszip.min.js"
       ]

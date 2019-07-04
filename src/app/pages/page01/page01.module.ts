@@ -10,7 +10,6 @@ import { ContentComponent } from './content/content.component';
   imports: [
     CommonModule,
     Page01RoutingModule
-  ],
-  exports:[ Page01Component ]
+  ]
 })
 export class Page01Module { }

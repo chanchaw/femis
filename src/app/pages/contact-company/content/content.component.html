@@ -1,0 +1,119 @@
+<div style="width: 500px">
+  <p>看看独立的 Drop Down Box 是否能成功：</p>
+  <dx-drop-down-box
+          [(value)]="dropDownSelectedValues"
+          valueExpr="id"
+          displayExpr="name"
+          placeholder="可以多选"
+          [showClearButton]="true"
+          [dataSource]="dropDownCategories"
+  >
+
+      <div *dxTemplate="let data of 'content'">
+          <dx-data-grid
+                  [dataSource]="dropDownCategories"
+                  [columns]="['id', 'name']"
+                  [selection]="{ mode: 'multiple' }"
+                  [hoverStateEnabled]="true"
+                  [paging]="{ enabled: true, pageSize: 10 }"
+                  [height]="345"
+                  [(selectedRowKeys)]="dropDownSelectedValues"
+          >
+          </dx-data-grid>
+      </div>
+  </dx-drop-down-box>
+
+</div>
+
+
+<div>
+  <dx-data-grid #dxTable
+    id="gridContainer"
+    [dataSource]="dataSource"
+    keyExpr="sid"
+    [showBorders]="true"
+    [selectedRowKeys]="selectedRowKeys">
+
+    <dxo-load-panel
+        [enabled]="true">
+    </dxo-load-panel>
+
+    <dxo-editing
+        mode="cell"
+        [refreshMode]="refreshMode"
+        [allowAdding]="true"
+        [allowUpdating]="true"
+        [allowDeleting]="true">
+    </dxo-editing>
+
+    <!-- <dxi-column *ngFor="let col of dxCols" dataField="{{col.dataField}}" caption="{{col.caption}}">
+    </dxi-column> -->
+
+    <dxi-column dataField="sid" caption="编号">
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+
+    <dxi-column dataField="name" caption="名称">
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+
+    <dxi-column dataField="bank" caption = "开户行">
+    </dxi-column>
+
+    <dxi-column dataField="categories" caption="所属类型">
+        <!-- <dxi-validation-rule type="required"></dxi-validation-rule> -->
+
+        <!-- <dxo-lookup
+          [dataSource]="dropDownCategories"
+          displayExpr="name"
+          valueExpr="id">
+        </dxo-lookup> -->
+
+          <!-- <dx-tag-box
+              [items]="dropDownCategories"
+              [value]="[1, 2, 3, 4, 5]"
+              displayExpr="name"
+              valueExpr="id"
+              [showSelectionControls]="true"
+              [maxDisplayedTags]="3"
+          ></dx-tag-box> -->
+    </dxi-column>
+
+    <dxi-column dataField="updatedate" caption="修改时间"></dxi-column>
+
+
+    <tbody *dxTemplate="let rowData of 'rowTemplateName';let curIndex = index" >
+        <tr>
+            <td>{{ rowData.data.sid }}</td>
+            <td>
+                {{employee.rowIndex}} - {{ employee.data.name }}
+          
+                <dx-drop-down-box
+                    [(value)]="employee.data.name"
+                    valueExpr="sid"
+                    displayExpr="name"
+                    placeholder="选择多个值"
+                    [showClearButton]="true"
+                    [dataSource]="ddDataSource">
+
+                    <div *dxTemplate="let data of 'content'">
+                        <dx-data-grid
+                            [dataSource]="ddDataSource"
+                            [columns]="['sid', 'name']"
+                            [selection]="{ mode: 'multiple' }"
+                            [hoverStateEnabled]="true"
+                            [paging]="{ enabled: true, pageSize: 10 }"
+                            [scrolling]="{ mode: 'infinite' }"
+                            [height]="345"
+                            [(selectedRowKeys)]="employee.data.name"
+                        >
+                        </dx-data-grid>
+                    </div>
+                </dx-drop-down-box>
+
+            </td>
+            <td>{{ employee.data.categories }}</td>
+        </tr>
+    </tbody>
+  </dx-data-grid>
+</div>

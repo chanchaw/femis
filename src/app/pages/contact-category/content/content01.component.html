@@ -1,0 +1,45 @@
+
+<div style="text-align: right;width: 200px;">
+    <button nz-button nzType="default">
+        <i nz-icon nzType="close" nzTheme="outline"></i>退出
+    </button>
+
+    &nbsp;
+    <button nz-button nzType="primary" (click)="onSelect($event)">
+        <i nz-icon nzType="check" nzTheme="outline"></i>选择
+    </button>
+    <br/><br/>
+<dx-data-grid #dxTable style="width: 200px"
+    id="gridContainer"
+    [dataSource]="tableData"
+    keyExpr="id"
+    [showBorders]="true"
+    [focusedRowEnabled]="true"
+    [selectedRowKeys]="selectedRowKeys">
+
+    <dxo-load-panel
+        [enabled]="true">
+    </dxo-load-panel>
+
+    <!-- 使用属性的方式（allMode checkBoxesMode 都是变量）
+    <dxo-selection
+        [selectAllMode]="allMode"
+        [showCheckBoxesMode]="checkBoxesMode"
+        mode="multiple"
+    ></dxo-selection> -->
+
+    <!-- 使用立即数的方式 -->
+    <dxo-selection
+        [selectAllMode]="'allPages'"
+        [showCheckBoxesMode]="'always'"
+        mode="multiple"
+    ></dxo-selection>
+
+    
+
+    <!-- <dxi-column dataField="rowIndex" caption="序号" width="60px"></dxi-column> -->
+    <!-- <dxi-column *ngFor="let col of cols" dataField="{{col.dataField}}" caption="{{col.caption}}"></dxi-column> -->
+    <dxi-column dataField="name" caption="名称"></dxi-column>
+
+</dx-data-grid>
+</div>

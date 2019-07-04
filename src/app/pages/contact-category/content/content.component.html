@@ -1,0 +1,36 @@
+<p>下面是所有可用的往来单位类型A：</p>
+<dx-data-grid style="width: 300px"
+    id="gridContainer"
+    [dataSource]="tableData"
+    keyExpr="id"
+    [showBorders]="true"
+    [focusedRowEnabled]="true"
+    rowTemplate="rowTemplateName">
+
+    <dxo-load-panel
+        [enabled]="true">
+    </dxo-load-panel>
+
+    <!-- 使用模板时多选功能不可用 -->
+    <!-- <dxo-selection
+        [selectAllMode]="allPages"
+        [showCheckBoxesMode]="always"
+        mode="multiple"
+    ></dxo-selection> -->
+
+    <dxi-column dataField="rowIndex" caption="序号" width="70"></dxi-column>
+    <dxi-column caption="选择" width="70"></dxi-column>
+    <dxi-column *ngFor="let col of cols" dataField="{{col.dataField}}" caption="{{col.caption}}"></dxi-column>
+    
+
+    <tbody class="employee dx-row" *dxTemplate="let employee of 'rowTemplateName'" >
+        <tr class="main-row">
+            <td>{{employee.rowIndex + 1}}</td>
+            <td><dx-check-box></dx-check-box></td>
+            <td *ngFor="let col of cols"> 
+                {{ employee.data[col.dataField]}}
+            </td>
+        </tr>
+    </tbody>
+
+</dx-data-grid>

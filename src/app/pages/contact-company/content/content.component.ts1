@@ -1,0 +1,175 @@
+import { ContactCategoryService } from './../../../shared/services/contact-category.service';
+import { TableStyle } from './../../../shared/services/tablestyle.service';
+import { TablestyleService, ContactCategory } from 'src/app/shared/services';
+import { DevExtremeDataGridColumn } from './../../../shared/services/model';
+import { ContactCompanyService, ContactCompany } from './../../../shared/services/contact-company.service';
+import { Component, OnInit } from '@angular/core';
+import { TABLESTYLE2DXDATAGRIDCOLUMN } from 'src/app/shared/services/globalConst';
+import CustomStore from 'devextreme/data/custom_store';
+import { HttpParams, HttpClient } from '@angular/common/http';
+
+@Component({
+  selector: 'app-content',
+  templateUrl: './contentZ.component.html',
+  styleUrls: ['./content.component.scss']
+})
+export class ContentComponent implements OnInit {
+
+  //#region 属性
+  tableData:ContactCompany[] = [];
+  dxCols:DevExtremeDataGridColumn[] = [];
+  tableName:string = 'contactcompany';
+  dataSource:any;
+  // dropDownCategories:ContactCategory[] = [];
+  dropDownCategories:any;
+  _dropDownSelectedValues:string[] = [];
+  //#endregion
+
+  get dropDownSelectedValues(): string[] {
+    return this._dropDownSelectedValues;
+  }
+
+  set dropDownSelectedValues(value: string[]) {
+      this._dropDownSelectedValues = value || [];
+  }
+
+
+  constructor(
+    private http:HttpClient,
+    private service:ContactCompanyService,
+    private tableStyleService:TablestyleService,
+    private contactCategoryService:ContactCategoryService
+  ) { 
+    // 获取下拉类别数据源
+    // contactCategoryService.getAll().subscribe(
+    //   (val:ContactCategory[]) => {
+        
+    //     this.dropDownCategories = val;
+    //     console.log(this.dropDownCategories);
+    //   },error => console.log('获取往来单位分类时出错！')
+    // );
+    this.dropDownCategories = this.makeAsyncDataSource(http,contactCategoryService.url.getAll);
+
+
+    // DevExtreme 内嵌类型作为表格控件的数据源
+    this.dataSource = new CustomStore({
+      key:"sid",
+      //load:() => this.sendRequest(service.url.getAllValid),
+      insert: (values) => this.sendRequest(service.url.insert, "POST", {
+        values: JSON.stringify(values),data:values
+      }),
+      remove: (key) => this.sendRequest(service.url.deleteByPrimaryKey + '/' + key, "DELETE", {
+          key: key
+      }),
+      update: (key, values) => {
+        var record = {...values};
+        record.sid = key;
+        record.oprimary = key;
+        //return this.sendRequest(service.url.updateByPrimaryKey, "PUT", {key: key,values: JSON.stringify(values)});
+        return this.sendRequest(service.url.updateSelective, "PUT", 
+          {key: key,values: JSON.stringify(record),data:record});
+      },
+
+      load:function (loadOptions: any) {
+        var params = '?';
+        params += 'skip=' + loadOptions.skip;
+        params += '&take=' + loadOptions.take;
+
+        if(loadOptions.sort) {
+            params += '&orderby=' + loadOptions.sort[0].selector;
+            if(loadOptions.sort[0].desc) {
+                params += ' desc';
+            }
+        }
+
+        return http.get(service.url.getAllValid + params)
+            .toPromise()
+            .then((data: any) => {      
+                return {
+                    data: data,
+                    totalCount: data.length
+                }
+            })
+            .catch(error => { console.log('请求是：') + service.url.getAllValid;throw '获取服务端数据时出错！'; });
+      }
+    });
+
+    
+    // 获取表格数据
+    service.getAll().subscribe(
+      (val:ContactCompany[]) => {
+        this.tableData = val;
+        for(var i=0;i<val.length;i++){
+          this.tableData[i].rowIndex = i+1;
+        }
+      },
+      error => console.log('在获取往来单位数据时出错！')
+    );
+
+    tableStyleService.getSingleTable(this.tableName).subscribe(
+      (val:TableStyle[]) => {
+        if(val.length>0){
+          this.dxCols = [];
+          val.forEach(ele => {
+            var item:DevExtremeDataGridColumn = new DevExtremeDataGridColumn();
+            TABLESTYLE2DXDATAGRIDCOLUMN.forEach(map => {
+              item[map.tFieldName] = ele[map.oFieldName];
+            });
+            this.dxCols.push(item);
+          });
+        }
+      },
+
+    );
+  }
+
+  ngOnInit() {
+  }
+
+
+  sendRequest(url: string, method: string = "GET", data: any = {}): any {
+    // this.logRequest(method, url, data);
+    let httpParams = new HttpParams({ fromObject: data });
+    let httpOptions = { withCredentials: true, body: httpParams };
+    let result;
+
+    switch(method) {
+        case "GET":
+            result = this.http.get(url, httpOptions);
+            break;
+        case "PUT":
+            result = this.http.post(url, data.data);
+            // result = this.http.put(url, httpParams, httpOptions); 官方案例
+            break;
+        case "POST":
+            result = this.http.post(url, data.data);
+            // result = this.http.post(url, httpParams, httpOptions);
+            break;
+        case "DELETE":
+            result = this.http.get(url,httpOptions);
+            // result = this.http.delete(url, httpOptions); 官方案例
+            break;
+    }
+
+    return result
+        .toPromise()
+        .then((data: any) => {
+            return method === "GET" ? data.data : data;
+        })
+        .catch(e => {
+            throw e && e.error && e.error.Message;
+        });
+}
+
+
+makeAsyncDataSource(http:HttpClient,url:string){
+  return new CustomStore({
+    loadMode:"raw",
+    key:"id",
+    load:function(){
+      return http.get(url).toPromise();
+    }
+  });
+}
+
+}
