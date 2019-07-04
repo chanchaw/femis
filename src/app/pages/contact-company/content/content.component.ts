@@ -10,6 +10,10 @@ import CustomStore from 'devextreme/data/custom_store';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { NzNotificationService } from 'ng-zorro-antd';
 
+/**
+ * 在 2019年7月4日 11:00:34 是模板文件 HTML 中缓存属性使用表数据的主键字段的最后一个版本
+ * 即将修改为使用表数据数组的 index 作为缓存数据的 key
+ */
 
 class EditCache{
   edit:boolean;
