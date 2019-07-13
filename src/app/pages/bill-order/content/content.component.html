@@ -1,0 +1,296 @@
+<!-- 工具栏 -->
+<div>
+
+  <nz-button-group [nzSize]="size">
+      <button nz-button nzType="default" (click)="submitMainform($event)">
+        <i nz-icon nzType="save" nzTheme="outline"></i>保存</button>
+      <button nz-button nzType="primary"><i nz-icon nzType="plus" nzTheme="outline"></i>新增</button>
+      <button nz-button nzType="default"><i nz-icon nzType="edit" nzTheme="outline"></i>修改</button>
+      <button nz-button nzType="default"><i nz-icon nzType="close" nzTheme="outline"></i>删除</button>
+  </nz-button-group>&nbsp;
+
+  <nz-button-group>
+      <button nz-button nzType="default" nz-tooltip nzTitle="首单"><i nz-icon nzType="vertical-right" nzTheme="outline"></i></button>
+      <button nz-button nzType="default" nz-tooltip nzTitle="前一单"><i nz-icon nzType="left" nzTheme="outline"></i></button>
+      <button nz-button nzType="default" nz-tooltip nzTitle="后一单"><i nz-icon nzType="right" nzTheme="outline"></i></button>
+      <button nz-button nzType="default" nz-tooltip nzTitle="末单"><i nz-icon nzType="vertical-left" nzTheme="outline"></i></button>
+  </nz-button-group>&nbsp;
+
+  <nz-button-group>
+      <button nz-button nzType="default">审核</button>
+      <button nz-button nzType="default" nz-tooltip nzTitle="取消审核"><i nz-icon nzType="undo" nzTheme="outline"></i></button>
+  </nz-button-group>&nbsp;
+
+  <nz-button-group>
+      <button nz-button nzType="default">作废</button>
+      <button nz-button nzType="default" nz-tooltip nzTitle="取消作废"><i nz-icon nzType="undo" nzTheme="outline"></i></button>
+  </nz-button-group>&nbsp;
+</div>&nbsp;
+
+
+<!-- 主表表单 style="background-color: burlywood"-->
+<form 
+  nz-form 
+  [nzLayout]="'inline'"
+  [formGroup]="mainForm"
+  (ngSubmit)="submitMainform()"
+>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">单据编号</nz-form-label>
+    <nz-form-control class="codeid" [nzSpan]="17" nzErrorTip="必填项">
+        <!-- <div nz-row>
+          <div nz-col [nzSpan]="19">
+            <input nz-input formControlName="codeid" placeholder="自动生成" />
+          </div>
+
+          <div nz-col [nzSpan]="5">
+            <button nz-button nzType="default"><i nz-icon nzType="sync" nzTheme="outline"></i></button>
+          </div>
+        </div> -->
+
+        <input nz-input formControlName="codeid" placeholder="自动生成" />
+      
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item >
+    <nz-form-label [nzSpan]="7">单据日期</nz-form-label>
+    <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
+      <nz-date-picker formControlName="billdate" placeholder="单据日期"
+        (ngModelChange)="onChangeBilldate($event)"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item >
+    <nz-form-label [nzSpan]="7">交期</nz-form-label>
+    <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
+      <nz-date-picker formControlName="deliverytime" placeholder="交期"
+        (ngModelChange)="onChangeDeliverytime($event)"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item >
+    <nz-form-label [nzSpan]="7">客户</nz-form-label>
+    <nz-form-control [nzSm]="17">
+      <!-- <input nz-input formControlName="clientid" placeholder="客户" /> -->
+
+      <nz-select nzShowSearch nzAllowClear
+        formControlName="clientid" placeholder="客户">
+        <nz-option *ngFor="let item of dddContactCompany" 
+          nzValue="{{item.sid}}" nzLabel="{{item.sid}} - {{item.name}}"></nz-option>
+      </nz-select>
+
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item >
+    <nz-form-label [nzSpan]="7">合同号</nz-form-label>
+    <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
+      <input nz-input formControlName="pactcode" placeholder="合同号码" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item >
+    <nz-form-label [nzSpan]="7">接单抬头</nz-form-label>
+    <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
+      
+      <nz-select nzShowSearch nzAllowClear
+        formControlName="contractor" placeholder="接单抬头">
+        <nz-option *ngFor="let item of dddCompanyTitle" 
+          nzValue="{{item.sid}}" nzLabel="{{item.sid}}"></nz-option>
+      </nz-select>
+
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item >
+    <nz-form-label [nzSpan]="7">销售类型</nz-form-label>
+    <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
+      
+      <nz-select nzShowSearch nzAllowClear
+        formControlName="salecategory" placeholder="销售类型">
+        <nz-option *ngFor="let item of dddSaleCategory" 
+          nzValue="{{item.sid}}" nzLabel="{{item.sid}}"></nz-option>
+      </nz-select>
+      
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item >
+    <nz-form-label [nzSpan]="7">结算方式</nz-form-label>
+    <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
+      
+      <input placeholder="录入后上下方向选择" nz-input formControlName="settlement"
+        (ngModelChange)="onChangeSettlment($event)" [nzAutocomplete]="tplSettlement"/>
+      <nz-autocomplete #tplSettlement>
+        <nz-auto-option *ngFor="let option of optSettlement" [nzValue]="option">
+          {{ option }}
+        </nz-auto-option>
+      </nz-autocomplete>
+
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item >
+    <nz-form-label [nzSpan]="7">交货方式</nz-form-label>
+    <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
+      
+      <input placeholder="录入后上下方向选择" nz-input formControlName="deliverytype"
+        (ngModelChange)="onChangeDeliverytype($event)" [nzAutocomplete]="tplDeliverytype"/>
+      <nz-autocomplete #tplDeliverytype>
+        <nz-auto-option *ngFor="let option of optDeliveryType" [nzValue]="option">
+          {{ option }}
+        </nz-auto-option>
+      </nz-autocomplete>
+
+
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item >
+    <nz-form-label [nzSpan]="7">包装方式</nz-form-label>
+    <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
+
+      <input placeholder="录入后上下方向选择" nz-input formControlName="packmanner"
+        (ngModelChange)="onChangePackmanner($event)" [nzAutocomplete]="tplPackmanner"/>
+      <nz-autocomplete #tplPackmanner>
+        <nz-auto-option *ngFor="let option of optPackmanner" [nzValue]="option">
+          {{ option }}
+        </nz-auto-option>
+      </nz-autocomplete>
+
+
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item >
+      <nz-form-label [nzSpan]="7">备注</nz-form-label>
+      <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
+        <input nz-input formControlName="remark" placeholder="备注" />
+      </nz-form-control>
+    </nz-form-item>
+  
+  <!-- <nz-form-item>
+    <nz-form-control [nzSpan]="14" [nzOffset]="44">
+      <button nz-button nzType="primary">保存</button>
+    </nz-form-control>
+  </nz-form-item> -->
+</form>
+<hr>
+
+
+<!-- 明细表 -->
+<nz-table #editRowTable nzBordered [nzData]="tableData" [nzSize]="small">
+    <thead>
+    <tr>
+        <th style="width:10px">序号</th>
+        <th nzWidth="1px">编号</th>
+        <th style="width:1px">名称</th>
+        <th style="width:1px">代号</th>
+        <th style="width:1px">别名</th>
+        <th style="width:1px">结算客户</th>
+        <th style="width:1px">所属类型</th>
+
+
+        <th nzWidth="30px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+
+
+    <!-- 数据行 -->
+    <tr *ngFor="let data of editRowTable.data; let index = index">
+        <td>{{ index + 1 }}</td>
+        <td>
+            <ng-container *ngIf="!editCache[index].edit; else sidInputTpl">
+                {{ data.sid }}
+            </ng-container>
+            <ng-template #sidInputTpl style="width: 100%">
+                <input type="text" nz-input [(ngModel)]="editCache[index].data.sid" />
+            </ng-template>
+        </td>
+        
+        <td>
+            <ng-container *ngIf="!editCache[index].edit; else nameInputTpl">
+                {{ data.name }}
+            </ng-container>
+            <ng-template #nameInputTpl style="width: 100%">
+                <input #ctlName type="text" nz-input [(ngModel)]="editCache[index].data.name" />
+            </ng-template>
+        </td>
+
+        <td>
+            <ng-container *ngIf="!editCache[index].edit; else codeInputTpl">
+                {{ data.code }}
+            </ng-container>
+            <ng-template #codeInputTpl style="width: 100%">
+                <input type="text" nz-input [(ngModel)]="editCache[index].data.code" />
+            </ng-template>
+        </td>
+
+    
+        <td>
+            <ng-container *ngIf="!editCache[index].edit; else aliasInputTpl">
+                {{ data.alias }}
+            </ng-container>
+            <ng-template #aliasInputTpl>
+                <input type="text" nz-input [(ngModel)]="editCache[index].data.alias" />
+            </ng-template>
+        </td>
+
+        
+        <td>
+            <ng-container *ngIf="!editCache[index].edit; else customerInputTpl">
+                {{ data.customer }}
+            </ng-container>
+            <ng-template #customerInputTpl style="width: 100%">
+                    <input type="text" nz-input [(ngModel)]="editCache[index].data.customer" />
+            </ng-template>
+        </td>
+
+
+        <td nzWidth="10%">
+            <ng-container *ngIf="!editCache[index].edit; else cateInputTpl">
+                {{ data.categoryNames }}
+            </ng-container>
+            <ng-template #cateInputTpl style="width: 100px">
+            
+                <nz-select
+                    [nzMaxTagCount]="2"
+                    [nzMaxTagPlaceholder]="tagPlaceHolder"
+                    style="width: 100%"
+                    nzMode="multiple"
+                    nzPlaceHolder="可以多选"
+                    [(ngModel)]="mSelectCategories"
+                >
+                <nz-option *ngFor="let option of categories" [nzLabel]="option.name" [nzValue]="option.sid"></nz-option>
+                </nz-select>
+                <ng-template #tagPlaceHolder let-selectedList> {{ selectedList.length }}...
+                </ng-template>
+            </ng-template>
+        </td>
+        
+
+
+        <td style="width:10%">
+        <div class="editable-row-operations">
+            <ng-container *ngIf="!editCache[index].edit; else saveTpl">
+                <a (click)="startEdit(index)">修改</a>&nbsp;
+                <a nz-popconfirm nzTitle="确定要删除么?" (nzOnConfirm)="deleteRow(index)">删除</a>
+            </ng-container>
+
+            <ng-template #saveTpl>
+                <a (click)="saveEdit(index)">保存</a>&nbsp;
+                <a nz-popconfirm nzTitle="确定要取消修改么?" (nzOnConfirm)="cancelEdit(index)">取消</a>
+            </ng-template>
+        </div>
+        </td>
+
+
+    </tr>
+
+    </tbody> 
+</nz-table>

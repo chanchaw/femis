@@ -9,6 +9,8 @@ export class TableStyle{
   fieldname:string;
   caption:string;
   widthpercent:string;
+  widthpx:string;
+  width:number;
   alignCaption:string;
   alignContent:string;
   display:string;

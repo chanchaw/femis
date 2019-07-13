@@ -1,3 +1,17 @@
-<p>
-  content works!
-</p>
+<div class="example-input">
+  <div>
+  <input
+    placeholder="上下键选择后回车"
+    nz-input
+    [(ngModel)]="inputValue"
+    (input)="onInput($event.target?.value)"
+    [nzAutocomplete]="auto"
+  />
+  <button nz-button>删除吧</button>
+</div>
+  <nz-autocomplete [nzDataSource]="filteredOptions" #auto> 
+    
+  </nz-autocomplete>
+</div>
+
+<div>{{ inputValue }}</div>

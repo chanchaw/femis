@@ -1,3 +1,4 @@
+import { SingleString } from './model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -5,7 +6,7 @@ import { Observable } from 'rxjs';
 //#region Model
 export class ContactCategory{
   rowIndex:number;
-  id:number;
+  sid:string;
   name:string;
   pid:number;
   serialno:number;
@@ -31,7 +32,8 @@ const pre:string="/ContactCategory";
 })
 export class ContactCategoryService {
   public url = {
-    'getAll':contextPath + pre + '/getAllValid'
+    'getAll':contextPath + pre + '/getAllValid',
+    'getCategoryNames':contextPath + pre + '/getCategoryNames'
   }
 
   constructor(
@@ -41,4 +43,11 @@ export class ContactCategoryService {
   getAll():Observable<ContactCategory[]>{
     return this.http.get<ContactCategory[]>(this.url.getAll);
   }
+
+  getCategoryNames(categories:string):Observable<SingleString>{
+    let url = this.url.getCategoryNames + '/' + categories;
+    console.log("获取分类名称的url:" + url);
+    return this.http.get<SingleString>(url);
+  }
+
 }

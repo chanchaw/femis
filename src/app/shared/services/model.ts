@@ -56,3 +56,8 @@ export class MetaFieldMap{
 }
 
 
+@Injectable()
+export class SingleString{
+  data:string;
+}
+

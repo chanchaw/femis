@@ -1,0 +1,34 @@
+<span class="data-tag"
+  *ngFor="let tag of tags;let i=index;">
+  <nz-tag  *ngIf="tag.visible" style="font-size:0.7em;"
+    [nzMode]="i === -1 ? 'default' : 'closeable'"
+    (nzAfterClose)="handleClose(tag)"
+    (click)="showInputInArray(tag)"
+    (nzOnClose)="onCloseTagInArray()">
+      <span style="font-size:1.2em;">{{ sliceTagName(tag.text) }}</span>
+  </nz-tag>
+  <input #inputElementInArray
+    *ngIf="!tag.visible"
+    type="text" nz-input nzSize='small' style="width:78px;"
+    [(ngModel)]="tag.text"
+    (blur)="handleInputConfirmInArray(tag)"
+    (keydown.enter)="handleInputConfirmInArray(tag)">
+</span>
+
+<nz-tag
+  *ngIf="!inputVisible"
+  class="editable-tag"
+  (click)="showInput()">
+  <i nz-icon type="plus"></i>
+  <span style="font-size:1.2em;">点我新增</span>
+</nz-tag>
+
+<input
+  #inputElement
+  nz-input
+  nzSize="small"
+  *ngIf="inputVisible" type="text"
+  [(ngModel)]="inputValue"
+  style="width: 78px;"
+  (blur)="handleInputConfirm()"
+  (keydown.enter)="handleInputConfirm()">

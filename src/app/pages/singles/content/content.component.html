@@ -1,0 +1,261 @@
+<!-- 多 card 形式 -->
+<div style="background: #ECECEC;padding:30px;">
+  <div nz-row [nzGutter]="8">
+
+    <!-- 结算方式 -->
+    <div nz-col [nzSpan]="8">
+      <nz-card nzTitle="结算方式" [nzExtra]="templateSettlement">
+          <nz-table #editRowTable nzBordered [nzData]="tableDataSettlement" [nzSize]="small">
+              <thead>
+                <tr>
+                  <th>名称</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+      
+      
+              <!-- 数据行 -->
+              <tr *ngFor="let data of editRowTable.data; let index = index">
+                  <td style="width: 70%">
+                      <ng-container *ngIf="!editCacheSettlement[index].edit; else sidInputTplSettlement">
+                          {{ data.sid }}
+                      </ng-container>
+                      <ng-template #sidInputTplSettlement style="width: 100%">
+                          <input type="text" nz-input [(ngModel)]="editCacheSettlement[index].data.sid" />
+                      </ng-template>
+                  </td>
+
+                  <!-- 操作 -->
+                  <td style="width:30%">
+                    <div class="editable-row-operations">
+                        <ng-container *ngIf="!editCacheSettlement[index].edit; else saveTplSettlement">
+                            <a (click)="startEditSettlement(index)">修改</a>&nbsp;
+                            <a nz-popconfirm nzTitle="确定要删除么?" (nzOnConfirm)="deleteRowSettlement(index)">删除</a>
+                        </ng-container>
+            
+                        <ng-template #saveTplSettlement>
+                            <a (click)="saveEditSettlement(index)">保存</a>&nbsp;
+                            <a nz-popconfirm nzTitle="确定要取消修改么?" (nzOnConfirm)="cancelEditSettlement(index)">取消</a>
+                        </ng-template>
+                    </div>
+                  </td>
+
+
+              </tr>
+      
+              </tbody> 
+          </nz-table>
+      </nz-card>
+    </div>
+
+    <!-- 交货方式 -->
+    <div nz-col [nzSpan]="8">
+        <nz-card nzTitle="交货方式" [nzExtra]="templateDelivery">
+          <nz-table #editRowTableDelivery nzBordered [nzData]="tableDataDelivery" [nzSize]="small">
+            <thead>
+              <tr>
+                <th>名称</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+  
+            <tbody>
+              <!-- 数据行 -->
+              <tr *ngFor="let data of editRowTableDelivery.data; let index = index">
+                <td style="width: 70%">
+                  <ng-container *ngIf="!editCacheDelivery[index].edit; else sidInputTplDelivery">
+                    {{ data.sid }}
+                    </ng-container>
+                    <ng-template #sidInputTplDelivery style="width: 100%">
+                      <input type="text" nz-input [(ngModel)]="editCacheDelivery[index].data.sid" />
+                    </ng-template>
+                </td>
+  
+                  <!-- 操作 -->
+                <td style="width:30%">
+                  <div class="editable-row-operations">
+                    <ng-container *ngIf="!editCacheDelivery[index].edit; else saveTplDelivery">
+                      <a (click)="startEditDelivery(index)">修改</a>&nbsp;
+                      <a nz-popconfirm nzTitle="确定要删除么?" (nzOnConfirm)="deleteRowDelivery(index)">删除</a>
+                    </ng-container>
+            
+                    <ng-template #saveTplDelivery>
+                      <a (click)="saveEditDelivery(index)">保存</a>&nbsp;
+                      <a nz-popconfirm nzTitle="确定要取消修改么?" (nzOnConfirm)="cancelEditDelivery(index)">取消</a>
+                    </ng-template>
+                  </div>
+                </td>
+              </tr>
+      
+            </tbody> 
+          </nz-table>
+        </nz-card>
+    </div>
+
+      <!-- 接单抬头 -->
+    <div nz-col [nzSpan]="8">
+          <nz-card nzTitle="接单抬头" [nzExtra]="templateComTitle">
+            <nz-table #editRowTableComTitle nzBordered [nzData]="tableDataComTitle" [nzSize]="small">
+              <thead>
+                <tr>
+                  <th>名称</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+    
+              <tbody>
+                <!-- 数据行 -->
+                <tr *ngFor="let data of editRowTableComTitle.data; let index = index">
+                  <td style="width: 70%">
+                    <ng-container *ngIf="!editCacheComTitle[index].edit; else sidInputTplComTitle">
+                      {{ data.sid }}
+                      </ng-container>
+                      <ng-template #sidInputTplComTitle style="width: 100%">
+                        <input type="text" nz-input [(ngModel)]="editCacheComTitle[index].data.sid" />
+                      </ng-template>
+                  </td>
+    
+                    <!-- 操作 -->
+                  <td style="width:30%">
+                    <div class="editable-row-operations">
+                      <ng-container *ngIf="!editCacheComTitle[index].edit; else saveTplComTitle">
+                        <a (click)="startEditComTitle(index)">修改</a>&nbsp;
+                        <a nz-popconfirm nzTitle="确定要删除么?" (nzOnConfirm)="deleteRowComTitle(index)">删除</a>
+                      </ng-container>
+              
+                      <ng-template #saveTplComTitle>
+                        <a (click)="saveEditComTitle(index)">保存</a>&nbsp;
+                        <a nz-popconfirm nzTitle="确定要取消修改么?" (nzOnConfirm)="cancelEditComTitle(index)">取消</a>
+                      </ng-template>
+                    </div>
+                  </td>
+                </tr>
+        
+              </tbody> 
+            </nz-table>
+          </nz-card>
+    </div>
+
+    <!-- 包装方式 -->
+    <div nz-col [nzSpan]="8">
+          <nz-card nzTitle="包装方式" [nzExtra]="templatePack">
+            <nz-table #editRowTablePack nzBordered [nzData]="tableDataPack" [nzSize]="small">
+              <thead>
+                <tr>
+                  <th>名称</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+    
+              <tbody>
+                <!-- 数据行 -->
+                <tr *ngFor="let data of editRowTablePack.data; let index = index">
+                  <td style="width: 70%">
+                    <ng-container *ngIf="!editCachePack[index].edit; else sidInputTplPack">
+                      {{ data.sid }}
+                      </ng-container>
+                      <ng-template #sidInputTplPack style="width: 100%">
+                        <input type="text" nz-input [(ngModel)]="editCachePack[index].data.sid" />
+                      </ng-template>
+                  </td>
+    
+                    <!-- 操作 -->
+                  <td style="width:30%">
+                    <div class="editable-row-operations">
+                      <ng-container *ngIf="!editCachePack[index].edit; else saveTplPack">
+                        <a (click)="startEditPack(index)">修改</a>&nbsp;
+                        <a nz-popconfirm nzTitle="确定要删除么?" (nzOnConfirm)="deleteRowPack(index)">删除</a>
+                      </ng-container>
+              
+                      <ng-template #saveTplPack>
+                        <a (click)="saveEditPack(index)">保存</a>&nbsp;
+                        <a nz-popconfirm nzTitle="确定要取消修改么?" (nzOnConfirm)="cancelEditPack(index)">取消</a>
+                      </ng-template>
+                    </div>
+                  </td>
+                </tr>
+        
+              </tbody> 
+            </nz-table>
+          </nz-card>
+    </div>
+
+
+
+
+  </div>
+</div>
+
+<ng-template #templateSettlement>
+    <a (click)="addNewRowSettlement($event)">新增</a>
+</ng-template>
+
+<ng-template #templateDelivery>
+    <a (click)="addNewRowDelivery($event)">新增</a>
+</ng-template>
+
+<ng-template #templateComTitle>
+    <a (click)="addNewRowComTitle($event)">新增</a>
+</ng-template>
+
+<ng-template #templatePack>
+    <a (click)="addNewRowPack($event)">新增</a>
+</ng-template>
+
+
+
+<!-- tag 的官方案例
+  <div>
+  <button nz-button (click)="refreshTags($event)">点我刷新</button>
+</div>
+
+<nz-tag style="margin-bottom: 10px;"
+  *ngFor="let tag of tags; let i = index"
+  [nzMode]="i <=2 ? 'default' : 'closeable'"
+  (nzAfterClose)="handleClose(tag)"
+  (nzOnClose)="onCloseTag($event)"
+>
+  {{ sliceTagName(tag) }}
+</nz-tag>
+
+
+
+<nz-tag *ngIf="!inputVisible" class="editable-tag" nzNoAnimation (click)="showInput()">
+  <i nz-icon nzType="plus"></i> New Tag
+</nz-tag>
+<input
+  #inputElement
+  nz-input
+  nzSize="small"
+  *ngIf="inputVisible"
+  type="text"
+  [(ngModel)]="inputValue"
+  style="width: 78px;"
+  (blur)="handleInputConfirm()"
+  (keydown.enter)="handleInputConfirm()"
+/> -->
+
+
+
+
+
+<!-- tag 形式显示简单基础资料
+  <div style="background: #ECECEC;padding:30px;">
+  <div nz-row [nzGutter]="8">
+    <div nz-col [nzSpan]="8">
+      <nz-card nzTitle="结算方式：">
+          <app-ccz-tag #tagSettlement [data]="settlement" (addNew)="settlementAddNew($event)" 
+          (delete)="settlementDelete($event)" (update)="settlementUpdate($event)"></app-ccz-tag>
+
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <nz-card nzTitle="交货方式">
+          <app-ccz-tag #tagDelivery [data]="deliveryType" (addNew)="deliveryAddNew($event)" 
+          (delete)="deliveryDelete($event)" (update)="deliveryUpdate($event)"></app-ccz-tag>
+      </nz-card>
+    </div>
+
+  </div>
+</div> -->

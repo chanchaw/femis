@@ -1,3 +1,4 @@
+import { PackageService } from './shared/services/package.service';
 import { LayoutModule } from './layout/layout.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -39,6 +40,7 @@ import deCldrData from "devextreme-cldr-data/de.json";
 import ruCldrData from "devextreme-cldr-data/ru.json";
 import zhCldrData from "devextreme-cldr-data/zh.json";
 import Globalize from "globalize";
+
 Globalize.load(
 supplemental, deCldrData, ruCldrData,zhCldrData
 );

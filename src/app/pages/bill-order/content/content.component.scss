@@ -1,0 +1,26 @@
+/*
+ * ng-zorro-antd 表单的item中的label的宽度
+ * 在 label 中文字个数不一致的情况下通过设置统一宽度
+ * 使得上下相邻的 nz-form-item 能对齐
+ * 4个汉字的适宜宽度 = 70.88px
+ 
+.ant-form-item-label{
+    width: 70.88px;
+    height: 39px;
+}*/
+
+/* 通过设置下面两个样式的宽度解决 nz-select 打乱 form 布局的问题*/
+/* nz-form-control 外围类 */
+.ant-form-item-control-wrapper{
+    width: 152.16px;
+}
+
+/* nz-form-item 样式类*/
+.ant-form-item{
+    width: 221.2px;
+}
+
+
+// .codeid{
+//     width: 100.16px;
+// }

@@ -1,0 +1,162 @@
+<p>
+    <button nz-button nzType="default" (click)="refresh($event)">
+            <i nz-icon nzType="sync" nzTheme="outline"></i>刷新</button>&nbsp;
+    <button nz-button nzType="primary" (click)="addNewRow($event)">
+        <i nz-icon nzType="plus" nzTheme="outline"></i>新增</button>&nbsp;
+    
+    <nz-button-group [nzSize]="size">
+        <button nz-button nzType="default"><i nz-icon nzType="export" nzTheme="outline"></i>导出</button>
+        <button nz-button nzType="default"><i nz-icon nzType="import" nzTheme="outline"></i>导入</button>
+    </nz-button-group>&nbsp;
+
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="width:200px">
+        <input type="text" nz-input placeholder="搜索所有列" [(ngModel)]="searchValue"
+            (keyup)="($event.which === 13)?search($event):0"/>
+    </nz-input-group>&nbsp;
+
+    <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch  (click)="search($event)"><i nz-icon nzType="search"></i></button>
+    </ng-template>
+<!-- 
+    <button nz-button nzType="default" (click)="exit($event)">
+        <i nz-icon nzType="close-circle" nzTheme="outline"></i>退出</button>&nbsp; -->
+</p>
+    <nz-table #editRowTable nzBordered [nzData]="tableData" [nzSize]="small">
+        <thead>
+        <tr>
+            <th style="width:10px">序号</th>
+            <!-- <th *ngFor="let item of tableCols" nzWidth="{{ item.width }}" nzAlign="{{ item.alignCaption }}"
+            [ngStyle]="{'display':item.display}" nzSortKey="{{ item.fieldname }}">
+            {{ item.caption }}
+            </th> -->
+            <!-- <th [nzWidth]="50">编号</th>
+            <th [nzWidth]="50">名称</th>
+            <th [nzWidth]="50">代号</th>
+            <th [nzWidth]="50">别名</th>
+            <th [nzWidth]="50">结算客户</th>
+            <th [nzWidth]="50">所属类型</th> -->
+    
+            <!-- <th nzWidth="10px">编号</th>
+            <th style="width: 50xp;">名称</th>
+            <th style="width: 50xp;">代号</th>
+            <th style="width: 50xp;">别名</th>
+            <th style="width: 50xp;">结算客户</th>
+            <th style="width: 50xp;">所属类型</th> -->
+    
+            <!-- <ng-container *ngFor="let item of tableCols">
+                <th *ngIf="item.visible" [style.width.px] = "item.width" nzAlign="{{ item.alignCaption }}" >
+                    {{ item.caption }}</th>
+            </ng-container> -->
+    
+            <!-- <th style="width: 10px">编号</th> 无效-->
+            <!-- <th style="width:10px">编号</th>   -->
+            <th nzWidth="1px">编号</th>
+            <th style="width:1px">名称</th>
+            <th style="width:1px">代号</th>
+            <th style="width:1px">别名</th>
+            <th style="width:1px">结算客户</th>
+            <th style="width:1px">所属类型</th>
+    
+    
+            <th nzWidth="30px">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        <!-- 数据行 -->
+        <tr *ngFor="let data of editRowTable.data; let index = index">
+            <td>{{ index + 1 }}</td>
+            <td>
+                <ng-container *ngIf="!editCache[index].edit; else sidInputTpl">
+                    {{ data.sid }}
+                </ng-container>
+                <ng-template #sidInputTpl style="width: 100%">
+                    <input type="text" nz-input [(ngModel)]="editCache[index].data.sid" />
+                </ng-template>
+            </td>
+            
+            <td>
+                <ng-container *ngIf="!editCache[index].edit; else nameInputTpl">
+                    {{ data.name }}
+                </ng-container>
+                <ng-template #nameInputTpl style="width: 100%">
+                    <input #ctlName type="text" nz-input [(ngModel)]="editCache[index].data.name" />
+                </ng-template>
+            </td>
+    
+            <td>
+                <ng-container *ngIf="!editCache[index].edit; else codeInputTpl">
+                    {{ data.code }}
+                </ng-container>
+                <ng-template #codeInputTpl style="width: 100%">
+                    <input type="text" nz-input [(ngModel)]="editCache[index].data.code" />
+                </ng-template>
+            </td>
+    
+        
+            <td>
+                <ng-container *ngIf="!editCache[index].edit; else aliasInputTpl">
+                    {{ data.alias }}
+                </ng-container>
+                <ng-template #aliasInputTpl>
+                    <input type="text" nz-input [(ngModel)]="editCache[index].data.alias" />
+                </ng-template>
+            </td>
+    
+            
+            <td>
+                <ng-container *ngIf="!editCache[index].edit; else customerInputTpl">
+                    {{ data.customer }}
+                </ng-container>
+                <ng-template #customerInputTpl style="width: 100%">
+                        <input type="text" nz-input [(ngModel)]="editCache[index].data.customer" />
+                </ng-template>
+            </td>
+    
+    
+            <td nzWidth="10%">
+                <ng-container *ngIf="!editCache[index].edit; else cateInputTpl">
+                    {{ data.categoryNames }}
+                </ng-container>
+                <ng-template #cateInputTpl style="width: 100px">
+                
+                    <nz-select
+                        [nzMaxTagCount]="2"
+                        [nzMaxTagPlaceholder]="tagPlaceHolder"
+                        style="width: 100%"
+                        nzMode="multiple"
+                        nzPlaceHolder="可以多选"
+                        [(ngModel)]="mSelectCategories"
+                    >
+                    <nz-option *ngFor="let option of categories" [nzLabel]="option.name" [nzValue]="option.sid"></nz-option>
+                    </nz-select>
+                    <ng-template #tagPlaceHolder let-selectedList> {{ selectedList.length }}...
+                    </ng-template>
+                </ng-template>
+            </td>
+            
+    
+    
+            <td style="width:10%">
+            <div class="editable-row-operations">
+                <ng-container *ngIf="!editCache[index].edit; else saveTpl">
+                    <a (click)="startEdit(index)">修改</a>&nbsp;
+                    <a nz-popconfirm nzTitle="确定要删除么?" (nzOnConfirm)="deleteRow(index)">删除</a>
+                </ng-container>
+    
+                <ng-template #saveTpl>
+                    <a (click)="saveEdit(index)">保存</a>&nbsp;
+                    <a nz-popconfirm nzTitle="确定要取消修改么?" (nzOnConfirm)="cancelEdit(index)">取消</a>
+                </ng-template>
+            </div>
+            </td>
+    
+    
+        </tr>
+
+        </tbody> 
+    </nz-table>
+    
+    
+    

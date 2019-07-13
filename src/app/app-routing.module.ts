@@ -54,6 +54,20 @@ const routes: Routes = [
   },
 
 
+  { 
+    path:'singles',
+    loadChildren:'./pages/singles/singles.module#SinglesModule',
+    data:{ title:'简单类型',isRemove: true }
+  },
+
+
+  { 
+    path:'febricOrder',
+    loadChildren:'./pages/bill-order/bill-order.module#BillOrderModule',
+    data:{ title:'面料订单',isRemove: true }
+  },
+
+
 
   // 默认显示的路径   contactCompany
   // {
