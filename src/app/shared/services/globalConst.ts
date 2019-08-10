@@ -10,3 +10,5 @@ export const TABLESTYLE2DXDATAGRIDCOLUMN:MetaFieldMap[] = [
     {oFieldName:'visible',tFieldName:'visible'},
     {oFieldName:'datatype',tFieldName:'dataType'}
 ]
+
+export const BILLTYPE_FABRICORDER = "fabricOrder";

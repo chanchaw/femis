@@ -8,4 +8,6 @@ export * from './contact-category.service';
 export * from './tablestyle.service';
 export * from './packmanner.service';
 export * from './order-main.service';
-
+export * from './order-detail.service';
+export * from './globalConst';
+export * from './string-util.service';

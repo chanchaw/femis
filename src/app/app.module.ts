@@ -40,6 +40,8 @@ import deCldrData from "devextreme-cldr-data/de.json";
 import ruCldrData from "devextreme-cldr-data/ru.json";
 import zhCldrData from "devextreme-cldr-data/zh.json";
 import Globalize from "globalize";
+import { ChroBillorderComponent } from './pages/chro-billorder/chro-billorder.component';
+
 
 Globalize.load(
 supplemental, deCldrData, ruCldrData,zhCldrData
@@ -56,7 +58,8 @@ registerLocaleData(zh);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ChroBillorderComponent
   ],
   imports: [
     BrowserModule,

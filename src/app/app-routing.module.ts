@@ -67,9 +67,28 @@ const routes: Routes = [
     data:{ title:'面料订单',isRemove: true }
   },
 
+  { 
+    path:'stringGenerator',
+    loadChildren:'./pages/string-generator/string-generator.module#StringGeneratorModule',
+    data:{ title:'字符串生成',isRemove: true }
+  },
+
+  { 
+    path:'mysqlTables',
+    loadChildren:'./pages/mysql-tables/mysql-tables.module#MysqlTablesModule',
+    data:{ title:'所有表',isRemove: true }
+  },
 
 
-  // 默认显示的路径   contactCompany
+  { 
+    path:'test',
+    loadChildren:'./pages/test/test.module#TestModule',
+    data:{ title:'测试',isRemove: true }
+  },
+
+
+
+  // 默认显示的路径   contactCompany   
   // {
   //   path: '**',
   //   redirectTo: 'home',

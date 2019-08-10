@@ -1,19 +1,17 @@
-<!-- 工具栏 -->
+<!-- 工具栏    [nzSize]="default"-->
 <div>
-
-  <nz-button-group [nzSize]="size">
-      <button nz-button nzType="default" (click)="submitMainform($event)">
-        <i nz-icon nzType="save" nzTheme="outline"></i>保存</button>
-      <button nz-button nzType="primary"><i nz-icon nzType="plus" nzTheme="outline"></i>新增</button>
-      <button nz-button nzType="default"><i nz-icon nzType="edit" nzTheme="outline"></i>修改</button>
-      <button nz-button nzType="default"><i nz-icon nzType="close" nzTheme="outline"></i>删除</button>
+  <nz-button-group>
+      <button nz-button nzType="default" (click)="saveBill()"><i nz-icon nzType="save" nzTheme="outline"></i>保存</button>
+      <button nz-button nzType="primary" (click)="addNewBill($event)"><i nz-icon nzType="plus" nzTheme="outline"></i>新增</button>
+      <!-- <button nz-button nzType="default" (click)="startEdit($event)"><i nz-icon nzType="edit" nzTheme="outline"></i>修改</button> -->
+      <button nz-button nzType="default" (click)="getMain()"><i nz-icon nzType="close" nzTheme="outline"></i>删除</button>
   </nz-button-group>&nbsp;
 
   <nz-button-group>
-      <button nz-button nzType="default" nz-tooltip nzTitle="首单"><i nz-icon nzType="vertical-right" nzTheme="outline"></i></button>
-      <button nz-button nzType="default" nz-tooltip nzTitle="前一单"><i nz-icon nzType="left" nzTheme="outline"></i></button>
-      <button nz-button nzType="default" nz-tooltip nzTitle="后一单"><i nz-icon nzType="right" nzTheme="outline"></i></button>
-      <button nz-button nzType="default" nz-tooltip nzTitle="末单"><i nz-icon nzType="vertical-left" nzTheme="outline"></i></button>
+      <button nz-button nzType="default" nz-tooltip nzTitle="首单" (click)="moveFirst()"><i nz-icon nzType="vertical-right" nzTheme="outline"></i></button>
+      <button nz-button nzType="default" nz-tooltip nzTitle="前一单" (click)="movePrevious()"><i nz-icon nzType="left" nzTheme="outline"></i></button>
+      <button nz-button nzType="default" nz-tooltip nzTitle="后一单" (click)="moveNext()"><i nz-icon nzType="right" nzTheme="outline"></i></button>
+      <button nz-button nzType="default" nz-tooltip nzTitle="末单" (click)="moveLast()"><i nz-icon nzType="vertical-left" nzTheme="outline"></i></button>
   </nz-button-group>&nbsp;
 
   <nz-button-group>
@@ -25,33 +23,30 @@
       <button nz-button nzType="default">作废</button>
       <button nz-button nzType="default" nz-tooltip nzTitle="取消作废"><i nz-icon nzType="undo" nzTheme="outline"></i></button>
   </nz-button-group>&nbsp;
+  
+
+  <nz-button-group>
+      <button nz-button nzType="default"><i nz-icon nzType="printer" nzTheme="outline"></i>打印</button>
+      <button nz-button nzType="default" (click)="ptable.exportCSV()"><i nz-icon nzType="file-excel" nzTheme="outline"></i>导出</button>
+  </nz-button-group>
+
+
+  &nbsp;
+  <img *ngIf="billStatus" src="assets/imgs/已保存.png" alt="已保存" width="88" height="30" style="vertical-align: top">
 </div>&nbsp;
 
-
-<!-- 主表表单 style="background-color: burlywood"-->
+<!-- 主表表单 style="background-color: burlywood"  (ngSubmit)="submitMainform()"-->
 <form 
   nz-form 
   [nzLayout]="'inline'"
   [formGroup]="mainForm"
-  (ngSubmit)="submitMainform()"
 >
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7">单据编号</nz-form-label>
-    <nz-form-control class="codeid" [nzSpan]="17" nzErrorTip="必填项">
-        <!-- <div nz-row>
-          <div nz-col [nzSpan]="19">
-            <input nz-input formControlName="codeid" placeholder="自动生成" />
-          </div>
-
-          <div nz-col [nzSpan]="5">
-            <button nz-button nzType="default"><i nz-icon nzType="sync" nzTheme="outline"></i></button>
-          </div>
-        </div> -->
-
-        <input nz-input formControlName="codeid" placeholder="自动生成" />
-      
-    </nz-form-control>
+      <nz-form-label [nzSpan]="7" >单据编号</nz-form-label>
+      <nz-form-control class="codeid" [nzSpan]="17" nzErrorTip="必填项">
+          <input nz-input formControlName="codeid" nz-tooltip nzTitle="自动生成，可手动输入"/>
+      </nz-form-control>
   </nz-form-item>
 
   <nz-form-item >
@@ -66,7 +61,7 @@
     <nz-form-label [nzSpan]="7">交期</nz-form-label>
     <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
       <nz-date-picker formControlName="deliverytime" placeholder="交期"
-        (ngModelChange)="onChangeDeliverytime($event)"></nz-date-picker>
+        (ngModelChange)="onChangeDeliverytime()"></nz-date-picker>
     </nz-form-control>
   </nz-form-item>
 
@@ -87,7 +82,7 @@
   <nz-form-item >
     <nz-form-label [nzSpan]="7">合同号</nz-form-label>
     <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
-      <input nz-input formControlName="pactcode" placeholder="合同号码" />
+      <input nz-input formControlName="pactcode" />
     </nz-form-control>
   </nz-form-item>
 
@@ -122,7 +117,7 @@
     <nz-form-label [nzSpan]="7">结算方式</nz-form-label>
     <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
       
-      <input placeholder="录入后上下方向选择" nz-input formControlName="settlement"
+      <input nz-input formControlName="settlement"
         (ngModelChange)="onChangeSettlment($event)" [nzAutocomplete]="tplSettlement"/>
       <nz-autocomplete #tplSettlement>
         <nz-auto-option *ngFor="let option of optSettlement" [nzValue]="option">
@@ -137,7 +132,7 @@
     <nz-form-label [nzSpan]="7">交货方式</nz-form-label>
     <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
       
-      <input placeholder="录入后上下方向选择" nz-input formControlName="deliverytype"
+      <input nz-input formControlName="deliverytype"
         (ngModelChange)="onChangeDeliverytype($event)" [nzAutocomplete]="tplDeliverytype"/>
       <nz-autocomplete #tplDeliverytype>
         <nz-auto-option *ngFor="let option of optDeliveryType" [nzValue]="option">
@@ -153,7 +148,7 @@
     <nz-form-label [nzSpan]="7">包装方式</nz-form-label>
     <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
 
-      <input placeholder="录入后上下方向选择" nz-input formControlName="packmanner"
+      <input nz-input formControlName="packmanner"
         (ngModelChange)="onChangePackmanner($event)" [nzAutocomplete]="tplPackmanner"/>
       <nz-autocomplete #tplPackmanner>
         <nz-auto-option *ngFor="let option of optPackmanner" [nzValue]="option">
@@ -169,7 +164,7 @@
   <nz-form-item >
       <nz-form-label [nzSpan]="7">备注</nz-form-label>
       <nz-form-control [nzSpan]="17" nzErrorTip="必填项">
-        <input nz-input formControlName="remark" placeholder="备注" />
+        <input nz-input formControlName="remark" />
       </nz-form-control>
     </nz-form-item>
   
@@ -179,118 +174,291 @@
     </nz-form-control>
   </nz-form-item> -->
 </form>
-<hr>
 
 
-<!-- 明细表 -->
-<nz-table #editRowTable nzBordered [nzData]="tableData" [nzSize]="small">
-    <thead>
-    <tr>
-        <th style="width:10px">序号</th>
-        <th nzWidth="1px">编号</th>
-        <th style="width:1px">名称</th>
-        <th style="width:1px">代号</th>
-        <th style="width:1px">别名</th>
-        <th style="width:1px">结算客户</th>
-        <th style="width:1px">所属类型</th>
+<!-- 
+  明细表，标准样式下，汉字个数对应的 px 数值：
+  2 = 65px,3 = 75px,4 = 90px,,,,,,,,
+  在 2019年7月20日 10:28:11 修改为使用 PrimeNG Table
+-->
+<br>
+<!-- 
+  下面是单行选中用到的属性：
+  1. 在 p-table 中设置：selectionMode="single" [(selection)]="selectedRow" 
+  2. 在 body 的 tr 中设置：[pSelectableRow]="rowData"
+-->
+<!-- <button nz-button><i nz-icon nzType="plus" nzTheme="outline"></i>新增行</button> -->
+<p-table #ptable [columns]="displayedCols" [value]="tableData" dataKey="id"
+  [scrollable]="true" scrollHeight="500px" [resizableColumns]="true" class="table-ellipsis"
+  >
+  <ng-template pTemplate="caption">
+      <!-- <div style="display: table;vertical-align: middle;text-align: center"> -->
+      <div class="tableCaptionContainer" style="display: flex;align-items: center">
+          <div class="tableCaptionLeft">
+              <a (click)="addNewRow($event)">
+              <i nz-icon nzType="plus" nzTheme="outline"></i>&nbsp;新增行</a>&nbsp;
+
+              <a (click)="deleteRow($event)">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>&nbsp;删除行</a>&nbsp;
+              <i style="color:RGB(191,191,191)">点击想要删除的行的“订单号”然后点击“删除行”</i>
+          </div>
+
+              <!-- <button pButton type="button" icon="pi pi-pencil" (click)="addNewRow($event)">新增行</button> &nbsp;
+              <button pButton type="button" icon="pi pi-times" (click)="deleteRow($event)">删除行</button> &nbsp; -->
+
+          <!-- <nz-button-group [nzSize]="default">
+              <button nz-button nzType="primary" (click)="addNewRow($event)"><i nz-icon nzType="plus" nzTheme="outline"></i>新增行</button>
+              <button nz-button nzType="danger" (click)="deleteRow($event)"><i nz-icon nzType="delete" nzTheme="outline"></i>删除行</button>
+          </nz-button-group>&nbsp; -->
+
+          <div class="tableCaptionRight">
+              <p-multiSelect [options]="cols" [(ngModel)]="displayedCols" optionLabel="header"
+              selectedItemsLabel="共显示{0}列" [style]="{minWidth: '200px'}" defaultLabel="选择显示的列"></p-multiSelect>
+          </div>
+      </div>
+  </ng-template>
+
+  <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+          <col style="width:50px;">
+          <col *ngFor="let col of columns" style="width:130px">
+          <!-- <col style="width: 100px;"> -->
+      </colgroup>
+  </ng-template>
 
 
-        <th nzWidth="30px">操作</th>
-    </tr>
-    </thead>
-    <tbody>
+  <ng-template pTemplate="header" let-columns>
+      <tr>
+          <th>#</th>
+          <th *ngFor="let col of columns" pResizableColumn>
+              {{col.header}}
+          </th>
 
+          <!-- <th pResizableColumn>序号</th><th pResizableColumn>订单号</th><th pResizableColumn>源订单号</th><th pResizableColumn>款号</th>
+          <th pResizableColumn>品名</th><th pResizableColumn>门幅</th><th pResizableColumn>克重</th><th pResizableColumn>颜色示例</th>
+          <th pResizableColumn>色号</th><th pResizableColumn>颜色</th><th pResizableColumn>公斤</th><th pResizableColumn>米数</th>
+          <th pResizableColumn>码数</th><th pResizableColumn>单价</th><th pResizableColumn>金额</th><th pResizableColumn>计价单位</th>
+          <th pResizableColumn>制版费</th><th pResizableColumn>中样费</th><th style="width:8em">操作</th> -->
+      </tr>
+  </ng-template>
 
-    <!-- 数据行 -->
-    <tr *ngFor="let data of editRowTable.data; let index = index">
-        <td>{{ index + 1 }}</td>
-        <td>
-            <ng-container *ngIf="!editCache[index].edit; else sidInputTpl">
-                {{ data.sid }}
-            </ng-container>
-            <ng-template #sidInputTpl style="width: 100%">
-                <input type="text" nz-input [(ngModel)]="editCache[index].data.sid" />
-            </ng-template>
-        </td>
-        
-        <td>
-            <ng-container *ngIf="!editCache[index].edit; else nameInputTpl">
-                {{ data.name }}
-            </ng-container>
-            <ng-template #nameInputTpl style="width: 100%">
-                <input #ctlName type="text" nz-input [(ngModel)]="editCache[index].data.name" />
-            </ng-template>
-        </td>
+  <!-- <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+          <td *ngFor="let col of columns" pEditableColumn>
+              {{rowData[col.field]}}
+          </td>
+      </tr>
+  </ng-template> -->
 
-        <td>
-            <ng-container *ngIf="!editCache[index].edit; else codeInputTpl">
-                {{ data.code }}
-            </ng-container>
-            <ng-template #codeInputTpl style="width: 100%">
-                <input type="text" nz-input [(ngModel)]="editCache[index].data.code" />
-            </ng-template>
-        </td>
+  <ng-template pTemplate="body" let-rowData let-ri="rowIndex" 
+      let-columns="columns">
+      <tr>
 
+          <td>{{ ri + 1 }}</td>
     
-        <td>
-            <ng-container *ngIf="!editCache[index].edit; else aliasInputTpl">
-                {{ data.alias }}
-            </ng-container>
-            <ng-template #aliasInputTpl>
-                <input type="text" nz-input [(ngModel)]="editCache[index].data.alias" />
-            </ng-template>
-        </td>
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('ordercode')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input type="text" pInputText [(ngModel)]="rowData.ordercode" class="editCtl" 
+                          (focus)="setSelectedRowIndex(ri)"/>
 
-        
-        <td>
-            <ng-container *ngIf="!editCache[index].edit; else customerInputTpl">
-                {{ data.customer }}
-            </ng-container>
-            <ng-template #customerInputTpl style="width: 100%">
-                    <input type="text" nz-input [(ngModel)]="editCache[index].data.customer" />
-            </ng-template>
-        </td>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.ordercode}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
 
-
-        <td nzWidth="10%">
-            <ng-container *ngIf="!editCache[index].edit; else cateInputTpl">
-                {{ data.categoryNames }}
-            </ng-container>
-            <ng-template #cateInputTpl style="width: 100px">
-            
-                <nz-select
-                    [nzMaxTagCount]="2"
-                    [nzMaxTagPlaceholder]="tagPlaceHolder"
-                    style="width: 100%"
-                    nzMode="multiple"
-                    nzPlaceHolder="可以多选"
-                    [(ngModel)]="mSelectCategories"
-                >
-                <nz-option *ngFor="let option of categories" [nzLabel]="option.name" [nzValue]="option.sid"></nz-option>
-                </nz-select>
-                <ng-template #tagPlaceHolder let-selectedList> {{ selectedList.length }}...
-                </ng-template>
-            </ng-template>
-        </td>
-        
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('oordercode')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input type="text" pInputText [(ngModel)]="rowData.oordercode" class="editCtl"/>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.oordercode}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
 
 
-        <td style="width:10%">
-        <div class="editable-row-operations">
-            <ng-container *ngIf="!editCache[index].edit; else saveTpl">
-                <a (click)="startEdit(index)">修改</a>&nbsp;
-                <a nz-popconfirm nzTitle="确定要删除么?" (nzOnConfirm)="deleteRow(index)">删除</a>
-            </ng-container>
-
-            <ng-template #saveTpl>
-                <a (click)="saveEdit(index)">保存</a>&nbsp;
-                <a nz-popconfirm nzTitle="确定要取消修改么?" (nzOnConfirm)="cancelEdit(index)">取消</a>
-            </ng-template>
-        </div>
-        </td>
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('stylecode')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input type="text" pInputText [(ngModel)]="rowData.stylecode" class="editCtl"/>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.stylecode}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
 
 
-    </tr>
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('goodsname')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input type="text" pInputText [(ngModel)]="rowData.goodsname" class="editCtl"/>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.goodsname}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
 
-    </tbody> 
-</nz-table>
+
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('spec01')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="rowData.spec01" class="editCtl">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.spec01}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
+  
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('spec02')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="rowData.spec02" class="editCtl">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.spec02}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
+
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('color')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="rowData.color" class="editCtl">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                      {{rowData.color}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
+  
+  
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('colorcode')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="rowData.colorcode" class="editCtl">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                      {{rowData.colorcode}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
+  
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('colorname')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="rowData.colorname" class="editCtl">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                      {{rowData.colorname}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
+
+
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('kg')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="rowData.kg" class="editCtl">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.kg}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
+
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('meter')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="rowData.meter" class="editCtl">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.meter}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
+      
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('yard')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="rowData.yard" class="editCtl">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.yard}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
+
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('price')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="rowData.price" class="editCtl">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.price}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
+  
+          
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('amount')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="rowData.amount" class="editCtl">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.amount}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
+          
+          
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('chargeunit')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="rowData.chargeunit" class="editCtl">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.chargeunit}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
+
+
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('platemake')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="rowData.platemake" class="editCtl">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.platemake}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>
+
+          <td pEditableColumn class="ui-resizable-column" *ngIf="td2Display('sample')">
+              <p-cellEditor>
+                  <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="rowData.sample" class="editCtl">
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                          {{rowData.sample}}
+                  </ng-template>
+              </p-cellEditor>
+          </td>    
+
+      </tr>
+  </ng-template>
+
+
+  
+</p-table>
+
+
+<p-toast></p-toast>

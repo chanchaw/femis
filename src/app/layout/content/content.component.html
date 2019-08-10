@@ -55,9 +55,10 @@
 
         ng-zorro 7之前版本的引用图标的方式
         <i class="anticon anticon-user"></i>
+        [nzTheme]="default"
         -->
 
-      <ul nz-menu [nzMode]="'inline'"  [nzInlineCollapsed]="isCollapsed" [nzTheme]="light"
+      <ul nz-menu [nzMode]="'inline'"  [nzInlineCollapsed]="isCollapsed" 
         style="height:100%">
 
         <li nz-menu-item
@@ -126,10 +127,17 @@
         <li nz-menu-item
             nz-popover nzTitle="系统设置" [nzContent]="tplSysConfig" nzPlacement="rightTop">
           <span title>
-              <i nz-icon type="setting" theme="outline"></i>
-            <span>系统设置</span>
+              <i nz-icon type="setting" theme="outline"></i><span>系统设置</span>
           </span>
-        </li>        
+        </li> 
+        
+        <li nz-menu-item
+            nz-popover nzTitle="开发工具" [nzContent]="tplDevTools" nzPlacement="rightTop">
+          <span title>
+            <i nz-icon nzType="tool" nzTheme="outline"></i><span>开发工具</span>
+          </span>
+        </li> 
+
       </ul>
     </nz-sider>
 
@@ -272,7 +280,22 @@
       </ul>
       </div>
     </div>
+  </ng-template>
+
+
+<!-- 开发工具 -->
+<ng-template #tplDevTools>
+  <div nz-row>
+    <div nz-col nzSpan="24">
+    <ul class="billElement">
+      <li><a (click)="tabs('stringGenerator')">字符串生成</a></li>
+      <li><a (click)="tabs('mysqlTables')">所有表</a></li>
+      <li><a (click)="tabs('test')">测试Getter,Setter</a></li>
+    </ul>
+    </div>
+  </div>
 </ng-template>
+
 
   
 

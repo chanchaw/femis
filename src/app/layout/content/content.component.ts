@@ -49,7 +49,7 @@ export class ContentComponent implements OnInit {
   private vrPassword:any;
 
   //侧边栏菜单是否折叠
-  private isCollapsed:boolean = true;
+  isCollapsed:boolean = true;
 
   private curUrl:any;
   

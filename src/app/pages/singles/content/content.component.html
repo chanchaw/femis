@@ -2,10 +2,10 @@
 <div style="background: #ECECEC;padding:30px;">
   <div nz-row [nzGutter]="8">
 
-    <!-- 结算方式 -->
+    <!-- 结算方式  [nzSize]="default"-->
     <div nz-col [nzSpan]="8">
       <nz-card nzTitle="结算方式" [nzExtra]="templateSettlement">
-          <nz-table #editRowTable nzBordered [nzData]="tableDataSettlement" [nzSize]="small">
+          <nz-table #editRowTable nzBordered [nzData]="tableDataSettlement">
               <thead>
                 <tr>
                   <th>名称</th>
@@ -49,10 +49,10 @@
       </nz-card>
     </div>
 
-    <!-- 交货方式 -->
+    <!-- 交货方式   [nzSize]="default"-->
     <div nz-col [nzSpan]="8">
         <nz-card nzTitle="交货方式" [nzExtra]="templateDelivery">
-          <nz-table #editRowTableDelivery nzBordered [nzData]="tableDataDelivery" [nzSize]="small">
+          <nz-table #editRowTableDelivery nzBordered [nzData]="tableDataDelivery">
             <thead>
               <tr>
                 <th>名称</th>
@@ -93,10 +93,10 @@
         </nz-card>
     </div>
 
-      <!-- 接单抬头 -->
+      <!-- 接单抬头   [nzSize]="default"-->
     <div nz-col [nzSpan]="8">
           <nz-card nzTitle="接单抬头" [nzExtra]="templateComTitle">
-            <nz-table #editRowTableComTitle nzBordered [nzData]="tableDataComTitle" [nzSize]="small">
+            <nz-table #editRowTableComTitle nzBordered [nzData]="tableDataComTitle">
               <thead>
                 <tr>
                   <th>名称</th>
@@ -137,10 +137,10 @@
           </nz-card>
     </div>
 
-    <!-- 包装方式 -->
+    <!-- 包装方式   [nzSize]="default"-->
     <div nz-col [nzSpan]="8">
           <nz-card nzTitle="包装方式" [nzExtra]="templatePack">
-            <nz-table #editRowTablePack nzBordered [nzData]="tableDataPack" [nzSize]="small">
+            <nz-table #editRowTablePack nzBordered [nzData]="tableDataPack">
               <thead>
                 <tr>
                   <th>名称</th>

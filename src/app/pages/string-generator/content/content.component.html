@@ -1,0 +1,20 @@
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+  间隔符号：<input nz-input [(ngModel)]="splitSymbol" style="width:100px;"/>
+  </div>
+</div>
+<br/>
+<div nz-row nzGutter="16">
+  <div nz-col nzSpan="6">
+    <textarea rows="12" nz-input [(ngModel)]="properties"></textarea>
+  </div>
+
+  <div nz-col nzSpan="4">
+    <button nz-button (click)="generateProperties()">生成 Getter Setter =></button>
+  </div>
+
+  <div nz-col nzSpan="14">
+    <textarea rows="12" nz-input [(ngModel)]="gsetter"></textarea>
+  </div>
+</div>

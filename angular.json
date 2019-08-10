@@ -57,7 +57,13 @@
               "src/themes/generated/theme.base.css",
               "src/themes/generated/theme.additional.css",
               "src/dx-styles.scss",
-              "src/styles.scss"
+              "src/styles.scss",
+
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
+
+
             ],
             "scripts": [
               "./node_modules/cldrjs/dist/cldr.js",
@@ -120,7 +126,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
+
+              
             ],
             "scripts": [
               "./node_modules/cldrjs/dist/cldr.js",

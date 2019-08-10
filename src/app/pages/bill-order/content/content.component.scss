@@ -21,6 +21,41 @@
 }
 
 
-// .codeid{
-//     width: 100.16px;
-// }
+
+/*
+ * 下面两个是解决同时有：列宽调整、行内编辑中有下拉
+ * 下拉出来的区域被隐藏的问题
+ */
+::ng-deep .ur-table-resizable > .ui-table-wrapper, td{
+    overflow: visible !important;
+}
+
+::ng-deep .ui-table-resizable>.ui-table-wrapper {
+    overflow: visible !important;
+}
+
+// 编辑状态下单元格内的控件宽度设置为100%
+.editCtl{
+    width:100%
+}
+
+// 表格功能按钮（编辑、删除、保存、取消）后面一个按钮设置margin-left
+.fnButtonNotFirst{
+    margin-left: 10px;
+}
+
+
+// td 中内容过多则显示省略号
+.table-ellipsis td {
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+
+// 表格组件 caption 下的第一层容器
+.tableCaptionContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

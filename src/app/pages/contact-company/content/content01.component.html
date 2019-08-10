@@ -1,10 +1,11 @@
 <p>
     <button nz-button nzType="default" (click)="refresh($event)">
             <i nz-icon nzType="sync" nzTheme="outline"></i>刷新</button>&nbsp;
-    <button nz-button nzType="primary" (click)="addNewRow($event)">
+    <button nz-button nzType="primary" (click)="addNewRow()">
         <i nz-icon nzType="plus" nzTheme="outline"></i>新增</button>&nbsp;
     
-    <nz-button-group [nzSize]="size">
+        <!-- [nzSize]="size" -->
+    <nz-button-group>
         <button nz-button nzType="default"><i nz-icon nzType="export" nzTheme="outline"></i>导出</button>
         <button nz-button nzType="default"><i nz-icon nzType="import" nzTheme="outline"></i>导入</button>
     </nz-button-group>&nbsp;
@@ -19,9 +20,10 @@
     </ng-template>
 <!-- 
     <button nz-button nzType="default" (click)="exit($event)">
-        <i nz-icon nzType="close-circle" nzTheme="outline"></i>退出</button>&nbsp; -->
+        <i nz-icon nzType="close-circle" nzTheme="outline"></i>退出</button>&nbsp; 
+    [nzSize]="small"-->
 </p>
-    <nz-table #editRowTable nzBordered [nzData]="tableData" [nzSize]="small">
+    <nz-table #editRowTable nzBordered [nzData]="tableData" >
         <thead>
         <tr>
             <th style="width:10px">序号</th>

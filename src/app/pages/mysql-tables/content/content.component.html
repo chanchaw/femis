@@ -1,0 +1,95 @@
+
+<!-- [stickyTop]="50"   -->
+
+<!-- 工具栏   [nzSize]="default"-->
+<nz-button-group >
+    <button nz-button nzType="default" (click)="generateModel($event)">生成 Angular Model</button>
+    <button nz-button nzType="default">测试</button>
+</nz-button-group>
+<br/><br/>
+
+
+<!-- 两个表格 -->
+<div nz-row nzGutter="16">
+
+<div nz-col nzSpan="10">
+<p-table #dtTable [columns]="displayedColsTable" [value]="tableData" selectionMode="single" [(selection)]="selectedRow" dataKey="autoSeq"
+    stickyHeader  stickyClass="stickyHeader" 
+    (onRowSelect)="getCols()">
+
+    <ng-template pTemplate="caption">
+        <div class="bothContainer">
+            <div class="bothLeft">
+            <p-multiSelect [options]="cols" [(ngModel)]="displayedColsTable" optionLabel="header"
+            selectedItemsLabel="共显示{0}列" [style]="{minWidth: '150px',align:'right'}" defaultLabel="选择显示的列"></p-multiSelect>
+            </div>
+
+            <div class="bothRight">
+            <input type="text" pInputText size="20" placeholder="全局过滤" 
+            (input)="dtTable.filterGlobal($event.target.value, 'contains')" style="width:auto">
+            </div>
+        </div>
+    </ng-template>
+
+  <ng-template pTemplate="header" let-columns>
+      <tr>
+          <th *ngFor="let col of columns">
+              {{col.header}}
+          </th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns">
+              {{rowData[col.field]}}
+          </td>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="summary">
+      <div style="text-align: left">
+          选中行：{{selectedRow ? '{表名：' + selectedRow.table_name + '，备注：' + selectedRow.table_comment + '}':'没有选中'}}
+      </div>
+  </ng-template>
+</p-table>
+</div>
+
+
+
+<div nz-col nzSpan="14">
+<p-table #dtField [columns]="displayedColsField" [value]="tableDataField" selectionMode="single" [(selection)]="selectedRowField" dataKey="autoSeq"
+    stickyHeader  stickyClass="stickyHeader" >
+
+    <ng-template pTemplate="caption">
+        <div class="bothContainer">
+            <div class="bothLeft">
+                <p-multiSelect [options]="colsField" [(ngModel)]="displayedColsField" optionLabel="header"
+                selectedItemsLabel="共显示{0}列" [style]="{minWidth: '200px',align:'right'}" defaultLabel="选择显示的列"></p-multiSelect>
+            </div>
+
+            <div class="bothRight">
+                <input type="text" pInputText size="20" placeholder="全局过滤" 
+                (input)="dtField.filterGlobal($event.target.value, 'contains')" style="width:auto">
+            </div>
+        </div>
+    </ng-template>
+
+
+  <ng-template pTemplate="header" let-columns>
+      <tr>
+          <th *ngFor="let col of columns">
+              {{col.header}}
+          </th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns">
+              {{rowData[col.field]}}
+          </td>
+      </tr>
+  </ng-template>
+</p-table>
+</div>
+
+
+</div>

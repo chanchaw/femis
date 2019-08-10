@@ -34,6 +34,19 @@ export class JsonData{
     public data:any[];
 }
 
+@Injectable()
+/**
+ * 创建时间：2019年8月5日 23:42:54
+ * 作者：chanchaw
+ * 功能简介：后端返回数据的统一接口
+ */
+export class ResponseResult{
+    public success:boolean;
+    public code:string;
+    public msg:string;
+    public data:any;
+}
+
 
 // DevExtreme DataGrid 组件
 @Injectable()
