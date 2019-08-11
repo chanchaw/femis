@@ -1,9 +1,8 @@
 import { User } from './../../shared/services/user.service';
 import { Component, OnInit, TemplateRef, ViewChild, ElementRef } from '@angular/core';
-import { NzModalRef, NzModalService, NzNotificationService } from 'ng-zorro-antd';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { TabComponent } from '../tab/tab.component';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { UserService } from 'src/app/shared/services';
 
 @Component({
@@ -57,9 +56,8 @@ export class ContentComponent implements OnInit {
   constructor(
     private router:Router,
     private modalService:NzModalService,
-    private userService:UserService,
-    private noti:NzNotificationService,
-    private http:HttpClient
+    private userService:UserService
+    // private noti:NzNotificationService
     // private reflect:ReflectUtilService
   ){}
 
@@ -236,12 +234,12 @@ export class ContentComponent implements OnInit {
           console.log('登录认证失败！');
           
           this.loginModalIsVisible=true;
-          this.noti.error('登录失败',val.msg,{'nzDuration':2000});
+          // this.noti.error('登录失败',val.msg,{'nzDuration':2000});
         }else{
           console.log('登录认证成功！');
           
           this.loginModalIsVisible=false;
-          this.noti.success('success','登录成功！',{'nzDuration':2000});
+          // this.noti.success('success','登录成功！',{'nzDuration':2000});
           console.log('登录成功立即获取登录状态的结果是：');
           console.log(this.isLogined('doLogin内部！'));          
         }

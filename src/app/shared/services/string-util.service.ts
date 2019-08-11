@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 @Injectable({
     providedIn: 'root'
@@ -7,11 +6,7 @@ import { DatePipe } from '@angular/common';
 export class StringUtilService {
 
 
-  constructor(
-    private datePipe:DatePipe
-  ){
-
-  }
+  constructor(){}
 
 
 static geModel(attString:string,splitSymbol:string):string{

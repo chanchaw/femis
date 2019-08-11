@@ -36,12 +36,6 @@ const routes: Routes = [
   },
 
   { 
-    path:'home01',
-    loadChildren:'./pages/home01/home01.module#Home01Module',
-    data:{ title:'首页',isRemove: true }
-  },
-
-  { 
     path:'contactCategory',
     loadChildren:'./pages/contact-category/contact-category.module#ContactCategoryModule',
     data:{ title:'往来单位类型',isRemove: true }
@@ -79,6 +73,12 @@ const routes: Routes = [
     data:{ title:'所有表',isRemove: true }
   },
 
+
+  { 
+    path:'home01',
+    loadChildren:'./pages/home01/home01.module#Home01Module',
+    data:{ title:'主页01',isRemove: true }
+  },
 
   { 
     path:'test',

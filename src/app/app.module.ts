@@ -1,3 +1,8 @@
+// import { ContentComponent } from './pages/page02/content/content.component';
+// import { Page02Component } from './pages/page02/page02.component';
+// import { Page02Module } from './pages/page02/page02.module';
+
+
 import { PackageService } from './shared/services/package.service';
 import { LayoutModule } from './layout/layout.module';
 import { BrowserModule } from '@angular/platform-browser';

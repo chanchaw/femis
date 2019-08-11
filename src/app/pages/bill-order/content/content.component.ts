@@ -21,7 +21,8 @@ import * as gConst from 'src/app/shared/services/globalConst';
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.scss']
+  styleUrls: ['./content.component.scss'],
+  providers:[ DatePipe ]
 })
 export class ContentComponent implements OnInit {
 

@@ -6,7 +6,7 @@ import { Page02Component } from './page02.component';
 import { ContentComponent } from './content/content.component';
 
 @NgModule({
-  declarations: [Page02Component, ContentComponent],
+  declarations: [ Page02Component,ContentComponent ],
   imports: [
     CommonModule,
     Page02RoutingModule
