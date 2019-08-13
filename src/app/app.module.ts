@@ -47,7 +47,6 @@ import zhCldrData from "devextreme-cldr-data/zh.json";
 import Globalize from "globalize";
 import { ChroBillorderComponent } from './pages/chro-billorder/chro-billorder.component';
 
-
 Globalize.load(
 supplemental, deCldrData, ruCldrData,zhCldrData
 );

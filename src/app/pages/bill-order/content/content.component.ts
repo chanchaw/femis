@@ -1,9 +1,10 @@
+import { FineReportService } from './../../../shared/services/fine-report.service';
 import { OrderDetail, OrderDetailService, OrderDetailProto } from './../../../shared/services/order-detail.service';
 import { Packmanner,PackmannerService } from './../../../shared/services/packmanner.service';
 import { Settlement, SettlementService } from './../../../shared/services/settlement.service';
 import { SalecategoryService, SaleCategory } from './../../../shared/services/salecategory.service';
 import { CompanytitleService, CompanyTitle } from './../../../shared/services/companytitle.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ContactCompanyService, ContactCompany } from 'src/app/shared/services/contact-company.service';
 import { DeliverytypeService, DeliveryType } from 'src/app/shared/services/deliverytype.service';
@@ -16,7 +17,9 @@ import { ContinuousService } from 'src/app/shared/services/continuous.service';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as gConst from 'src/app/shared/services/globalConst';
+import * as ejs from 'src/assets/lib/jquery-3.4.1.js';
 
+declare var FR:any;
 
 @Component({
   selector: 'app-content',
@@ -47,6 +50,8 @@ export class ContentComponent implements OnInit {
 
   
   tableData:OrderDetail[] = [];
+
+  @ViewChild("fr",{static:false}) fr:ElementRef;
 
   /**
    * 1. 遍历 tableData 过滤掉非法数据将有效数据构成新的数据
@@ -81,6 +86,8 @@ export class ContentComponent implements OnInit {
   displayedCols:PTableHeader[] = [];
 
   tmpMain:OrderMain = new OrderMain();
+
+  
   //#endregion
 
   //#region 生命周期钩子
@@ -98,7 +105,8 @@ export class ContentComponent implements OnInit {
     private msgService:MessageService, // PrimeNG 的 Toast
     private billService:BillOrderService,
     private datePipe:DatePipe,
-    private billcodeService:ContinuousService
+    private billcodeService:ContinuousService,
+    private rpt:FineReportService
   ) { 
     this.displayedCols = [];
     this.displayedCols = this.displayedCols.concat(this.cols);
@@ -675,6 +683,30 @@ transformDate4Main(main:OrderMain){
     
   }
 
+  printBillReport(){
+    const id:number = this.mainForm.value["id"];
+    alert("单据id=" + id.toString());
+    this.rpt.printBillReport(id).subscribe(
+      ( res ) =>console.log("请求单据报表成功！"),error =>console.log("请求单据报表失败！")
+    )
+  }
+
+  hifr(){
+    this.fr.nativeElement.click();
+  }
+
+  btnDirec(){
+    window.open("http://localhost:8080/femisnsb/ReportServer?reportlet=%E9%9D%A2%E6%96%99%E8%AE%A2%E5%8D%95%E5%8D%95%E6%8D%AE.cpt&mainId=43&format=excel");
+  }
+
+
+  useJs(){
+    alert("即将调用js直接打印");
+    const url = "http://localhost:8080/femisnsb/ReportServer?reportlet=%E9%9D%A2%E6%96%99%E8%AE%A2%E5%8D%95%E5%8D%95%E6%8D%AE.cpt&mainId=43";
+    const isPopup = false;
+    const config = {url:url,isPopUp:isPopup};
+    FR.doURLPDFPrint(config);
+  }
 }
 
 
