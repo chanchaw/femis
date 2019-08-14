@@ -86,6 +86,13 @@ const routes: Routes = [
     data:{ title:'测试',isRemove: true }
   },
 
+  { 
+    path:'billFebricOrder',
+    loadChildren:'./pages/bill-febricorder/bill-febricorder.module#BillFebricorderModule',
+    data:{ title:'新面料订单',isRemove: true }
+  },
+
+
 
 
   // 默认显示的路径   contactCompany   

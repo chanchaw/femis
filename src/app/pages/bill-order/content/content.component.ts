@@ -691,9 +691,7 @@ transformDate4Main(main:OrderMain){
     )
   }
 
-  hifr(){
-    this.fr.nativeElement.click();
-  }
+
 
   btnDirec(){
     window.open("http://localhost:8080/femisnsb/ReportServer?reportlet=%E9%9D%A2%E6%96%99%E8%AE%A2%E5%8D%95%E5%8D%95%E6%8D%AE.cpt&mainId=43&format=excel");

@@ -58,7 +58,7 @@
         [nzTheme]="default"
         -->
 
-      <ul nz-menu [nzMode]="'inline'"  [nzInlineCollapsed]="isCollapsed" 
+      <ul nz-menu [nzMode]="'inline'"  [nzInlineCollapsed]="isCollapsed"  nzTheme="dark"
         style="height:100%">
 
         <li nz-menu-item
@@ -163,7 +163,7 @@
         <div nz-col nzSpan="24">
         <ul class="billElement">
           <li><a (click)="tabs('febricOrder')">面料订单</a></li>
-          <li>成品订单</li>
+          <li><a (click)="tabs('billFebricOrder')">新面料订单</a></li>
           <li>流转卡打印</li>
           <li>原料申请</li>
           <li>白坯构成</li>

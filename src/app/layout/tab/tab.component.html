@@ -2,12 +2,14 @@
            [nzSelectedIndex]="currentIndex"
            [nzShowPagination]="true"
            (nzSelectChange)="nzSelectChange($event)"
-           [nzType]="'card'">
+           [nzType]="'card'"
+           [nzSize]="small">
   <nz-tab *ngFor="let menu of menuList" [nzTitle]="nzTabHeading">
     <ng-template #nzTabHeading>
       <div>
         {{menu.title}}
-        <i *ngIf="menu.isRemove" (click)="closeUrl(menu.url)" class="anticon anticon-close" ></i>
+        <!-- <i *ngIf="menu.isRemove" (click)="closeUrl(menu.url)" class="anticon anticon-close" ></i> -->
+        <i nz-icon nzType="close" nzTheme="outline" *ngIf="menu.isRemove" (click)="closeUrl(menu.url)"></i>
       </div>
     </ng-template>
   </nz-tab>

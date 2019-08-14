@@ -1,9 +1,12 @@
-<!-- 工具栏    [nzSize]="default"-->
+<!-- 
+  工具栏 
+  style="height:44px;border: 2px solid #ECECEC;"
+-->
 <div>
+  <div>
   <nz-button-group>
       <button nz-button nzType="default" (click)="saveBill()"><i nz-icon nzType="save" nzTheme="outline"></i>保存</button>
       <button nz-button nzType="primary" (click)="addNewBill($event)"><i nz-icon nzType="plus" nzTheme="outline"></i>新增</button>
-      <!-- <button nz-button nzType="default" (click)="startEdit($event)"><i nz-icon nzType="edit" nzTheme="outline"></i>修改</button> -->
       <button nz-button nzType="default" (click)="getMain()"><i nz-icon nzType="close" nzTheme="outline"></i>删除</button>
   </nz-button-group>&nbsp;
 
@@ -26,8 +29,6 @@
   
 
   <nz-button-group>
-      <a #fr href="http://localhost:8080/femisnsb/ReportServer?reportlet=%E9%9D%A2%E6%96%99%E8%AE%A2%E5%8D%95%E5%8D%95%E6%8D%AE.cpt&mainId=43&format=excel" target="blank">新窗口报表</a>
-      <button nz-button nzType="dashed" (click)="hifr()">隐式触发</button>
       <button nz-button nzType="primary" (click)="btnDirec()">按钮直接</button>
       <button nz-button nzType="danger" (click)="useJs()">调用js直接打印</button>
       <button nz-button nzType="default" (click)="printBillReport()"><i nz-icon nzType="printer" nzTheme="outline"></i>打印</button>
@@ -37,9 +38,11 @@
 
   &nbsp;
   <img *ngIf="billStatus" src="assets/imgs/已保存.png" alt="已保存" width="88" height="30" style="vertical-align: top">
+</div>
 </div>&nbsp;
 
 <!-- 主表表单 style="background-color: burlywood"  (ngSubmit)="submitMainform()"-->
+<div>
 <form 
   nz-form 
   [nzLayout]="'inline'"
@@ -49,7 +52,7 @@
   <nz-form-item>
       <nz-form-label [nzSpan]="7" >单据编号</nz-form-label>
       <nz-form-control class="codeid" [nzSpan]="17" nzErrorTip="必填项">
-          <input nz-input formControlName="codeid" nz-tooltip nzTitle="自动生成，可手动输入" nzSize="small"/>
+          <input nz-input formControlName="codeid" nz-tooltip nzTitle="自动生成，可手动输入"/>
       </nz-form-control>
   </nz-form-item>
 
@@ -178,6 +181,7 @@
     </nz-form-control>
   </nz-form-item> -->
 </form>
+</div>
 
 
 <!-- 
